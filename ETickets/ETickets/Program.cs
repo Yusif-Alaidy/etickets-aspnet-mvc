@@ -1,3 +1,6 @@
+using ETickets.DataAccess;
+using Microsoft.EntityFrameworkCore;
+
 namespace ETickets
 {
     public class Program
@@ -8,6 +11,8 @@ namespace ETickets
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<CineBookContext>( options => options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase") ) );
 
             var app = builder.Build();
 
