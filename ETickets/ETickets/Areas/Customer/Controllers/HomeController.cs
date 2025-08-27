@@ -24,9 +24,12 @@ namespace ETickets.Areas.Customer.Controllers
         {
             return View();
         }
-        public IActionResult Movie()
+        public IActionResult Movie(int id)
         {
-            return View();
+            var movie = _context.Movies.Include(e=>e.Category).Include(e=>e.Cinema).FirstOrDefault(e => e.Id == id);
+            if (movie is null) { return NotFound(); }
+
+            return View(movie);
         }
     }
 }
