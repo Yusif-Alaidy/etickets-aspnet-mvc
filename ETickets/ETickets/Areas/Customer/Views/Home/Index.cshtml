@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Movie>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -68,208 +69,76 @@
 
         <hr class="border-3" style="border-color: #000000;">
 
+        <!-- Comming Soon-->
         <section>
             <h3 class="text-center">Comming soon</h3>
+
             <div class="row row-cols-2 row-cols-md-5 g-3 mt-3 container">
-                <div class="col">
 
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Movie">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
+                @foreach (var Movie in Model)
+                {
+                    @* Card *@
+                    <div class="col">
+                        <div class="card bg-dark text-white border-0 h-100">
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Movie">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
+                            </a>
+                            <div class="card-body p-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
+                                    </div>
+                                    <div class="col-md-4 mb-0 pb-0">
+                                        <h6>
+                                            <small>
+                                                $550.3
+                                            </small>
+                                        </h6>
+                                    </div>
                                 </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
+                                <small class="me-2">★★★★☆ 4.5</small>
+                                <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
                             </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
                         </div>
                     </div>
-                </div>
+                }
 
-                <div class="col">
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a href="">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
-                                </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
-                            </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a href="">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
-                                </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
-                            </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a href="">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
-                                </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
-                            </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </section>
+
         <hr class="border border-1 ms-5 me-5 mt-4">
+
         <section>
             <h3 class="text-center text-uppercase mt-4">Watch Now</h3>
             <div class="row row-cols-2 row-cols-md-5 g-3 mt-3 container">
-                <div class="col">
-
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a href="">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
+                @foreach (var Movie in Model)
+                {
+                    @* Card *@
+                    <div class="col">
+                        <div class="card bg-dark text-white border-0 h-100">
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Movie">
+                                <img src="~/img/@Movie.ImgUrl" class="card-img-top" height="250" width="100" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
+                            </a>
+                            <div class="card-body p-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="fs-7 mt-1 mb-0 pt-0 pb-0 ms-1 " style="opacity: 0.3;">@Movie.Category.Name</p>
+                                    </div>
+                                    <div class="col-md-4 mb-0 pb-0">
+                                        <h6>
+                                            <small>
+                                                $@Movie.Price
+                                            </small>
+                                        </h6>
+                                    </div>
                                 </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
+                                <small class="me-2">★★★★☆ 4.5</small>
+                                <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
                             </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
                         </div>
                     </div>
-                </div>
-
-                <div class="col">
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a href="">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
-                                </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
-                            </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a href="">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
-                                </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
-                            </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="card bg-dark text-white border-0 h-100">
-                        <a href="">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                        </a>
-                        <div class="card-body p-2">
-                            <div class="row">
-                                <div class="col">
-                                    <p class="fs-7 mt-0 mb-0 pt-0 pb-0" style="opacity: 0.3;">Action</p>
-                                </div>
-                                <div class="col-md-4 mb-0 pb-0">
-                                    <h6>
-                                        <small>
-                                            $550.3
-                                        </small>
-                                    </h6>
-                                </div>
-                            </div>
-                            <small class="me-2">★★★★☆ 4.5</small>
-                            <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
-                        </div>
-                    </div>
-                </div>
+                }
 
             </div>
         </section>
