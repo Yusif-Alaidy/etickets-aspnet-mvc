@@ -15,7 +15,7 @@ namespace ETickets.Areas.Customer.Controllers
             _context = context;
         }
 
-        public IActionResult Index(FilterVM filterVM)
+        public IActionResult Index(FilterVM filterVM, int page = 1)
         {
             Home data = new();
             var categories = _context.Categories;
@@ -61,6 +61,15 @@ namespace ETickets.Areas.Customer.Controllers
             }
             // --------------------------------------------------------------------------------------------
 
+            // Paginitation -------------------------------------------------------------------------------
+            var totalNumberOfPages = Math.Ceiling(movies.Count() / 10.0);
+            var currentPage = page;
+            ViewBag.totalNumberOfPages = totalNumberOfPages;
+            ViewBag.currentPage = currentPage;
+            // -------------------------------------------------------------------------------------------
+
+           
+            movies = movies.Skip((page-1)*10).Take(10);
             data.Movies = movies.ToList();
             data.Categories = categories.ToList();
             data.Cinemas = cinemas.ToList();

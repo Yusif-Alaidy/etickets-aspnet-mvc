@@ -36,36 +36,9 @@
                         <input hidden type="number" class="form-control" id="minPrice" placeholder="0" name="minPrice" value="@ViewBag.MinPrice">
                         <input hidden type="number" class="form-control" id="maxPrice" placeholder="1000" name="maxPrice" value="@ViewBag.MaxPrice">
 
-                        <select hidden class="form-select" id="category" name="categoryId">
-                            <option value="">All</option>
-                            @foreach (var cat in Model.Categories)
-                            {
-                                @if (cat.Id == ViewBag.CategoryId)
-                                {
-                                    <option selected value="@cat.Id" action="">@cat.Name</option>
-                                }
-                                else
-                                {
-                                    <option value="@cat.Id" action="">@cat.Name</option>
-                                }
-                            }
 
-                        </select>
 
-                        <select hidden class="form-select" id="cinema" name="cinemaId">
-                            <option value="">All</option>
-                            @foreach (var cat in Model.Cinemas)
-                            {
-                                @if (cat.Id == ViewBag.CinemaId)
-                                {
-                                    <option selected value="@cat.Id" action="">@cat.Name</option>
-                                }
-                                else
-                                {
-                                    <option value="@cat.Id" action="">@cat.Name</option>
-                                }
-                            }
-                        </select>
+
 
                         <button class="btn btn-outline-light" type="submit">Search</button>
                     </form>
