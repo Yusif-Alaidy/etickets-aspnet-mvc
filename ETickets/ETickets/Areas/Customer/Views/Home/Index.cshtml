@@ -165,9 +165,65 @@
                     </div>
                 }
 
+                <nav aria-label="Page navigation example" class="" style="margin:auto; margin-top:25px;">
+                    <ul class="pagination">
+                    @if (ViewBag.currentPage > 1 && Model.Movies is not null)
+                    {
+                        <li class="page-item">
+                            <a class="page-link bg-dark text-bg-light text-light" asp-area="Customer" asp-controller="Home"
+                            asp-action="Index"
+                            asp-route-Name="@ViewBag.ProductName"
+                            asp-route-MinPrice="@ViewBag.MinPrice"
+                            asp-route-MaxPrice="@ViewBag.MaxPrice"
+                            asp-route-CategoryId="@ViewBag.CategoryId"
+                            asp-route-page="@(ViewBag.currentPage - 1)">Previous</a>
+                        </li>
+                    }
+                    @for (int i = 1; i <= ViewBag.totalNumberOfPages; i++)
+                        {
+                        <li class="page-item ">
+                            @if (i == ViewBag.currentPage)
+                            {                                
+                                <a class="page-link bg-dark text-bg-light text-light active" asp-area="Customer"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-Name="@ViewBag.ProductName"
+                                   asp-route-MinPrice="@ViewBag.MinPrice"
+                                   asp-route-MaxPrice="@ViewBag.MaxPrice"
+                                   asp-route-CategoryId="@ViewBag.CategoryId"
+                                   asp-route-IsHot="@ViewBag.IsHot"
+                                    asp-route-page="@i">@i</a>
+                            }
+                            else
+                                {
+                                <a class="page-link bg-dark text-bg-light text-light" asp-area="Customer"
+                                   asp-controller="Home"
+                                   asp-action="Index"
+                                   asp-route-Name="@ViewBag.ProductName"
+                                   asp-route-MinPrice="@ViewBag.MinPrice"
+                                   asp-route-MaxPrice="@ViewBag.MaxPrice"
+                                   asp-route-CategoryId="@ViewBag.CategoryId"
+                                   asp-route-page="@i">@i</a>
+                                }   
+                        </li>
+                        }
+                        
+                        @if (ViewBag.currentPage < ViewBag.totalNumberOfPages && Model.Movies is not null) 
+                        {
+                            <li class="page-item ">
+                                <a class="page-link bg-dark text-bg-light text-light" asp-area="Customer" asp-controller="Home"
+                                asp-action="Index"
+                                asp-route-Name="@ViewBag.ProductName"
+                                asp-route-MinPrice="@ViewBag.MinPrice"
+                                asp-route-MaxPrice="@ViewBag.MaxPrice"
+                                asp-route-CategoryId="@ViewBag.CategoryId"
+                                asp-route-page="@(ViewBag.currentPage+1)">Next</a>
+                            </li>
+                        }
+                </ul>
+                </nav>
             </div>
         </section>
-
 
 </main>
 
