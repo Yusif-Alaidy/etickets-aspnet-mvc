@@ -1,4 +1,5 @@
-﻿@model Movie
+﻿@using ETickets.ViewModel
+@model MovieDetails
 <main class="bg-black text-white">
 
 
@@ -7,11 +8,11 @@
 
         <div class="row g-4 ">
             <div class="col-md-3  border-0 rounded" style="background-color: rgba(33, 37, 41, 0.8);">
-                @if (Model.ImgUrl is not null)
+                @if (Model.Movie.ImgUrl is not null)
                 {
-                    <img src="~/img/@Model.ImgUrl" alt="Movie poster for La La Land showing a man and woman dancing in yellow spotlight" class="img-fluid rounded shadow-sm mb-3 mt-2" />
+                    <img src="~/img/@Model.Movie.ImgUrl" alt="Movie poster for La La Land showing a man and woman dancing in yellow spotlight" class="img-fluid rounded shadow-sm mb-3 mt-2" />
                 }
-                @if (Model.ImgUrl is null)
+                @if (Model.Movie.ImgUrl is null)
                 {
                     <img src="~/img/default.png" alt="Movie poster for La La Land showing a man and woman dancing in yellow spotlight" class="img-fluid rounded shadow-sm mb-3 mt-2" />
                 }
@@ -22,13 +23,13 @@
 
             <div class="col-md-6 text-start text-light">
                 <div class="card-body p-2">
-                    <h2 class="card-title m-0">@Model.Name</h2>
+                    <h2 class="card-title m-0">@Model.Movie.Name</h2>
                     <small>★★★☆☆ 7.3</small>
                 </div>
-                @if(Model.Description is not null)
+                @if(Model.Movie.Description is not null)
                 {   
                 <p>
-                    <small>@Model.Description</small>
+                    <small>@Model.Movie.Description</small>
                 </p>
                 }
 
@@ -36,8 +37,8 @@
                     <span><i class="fas fa-users"></i> 33,453</span>
                     <span class="ms-3">PG-13</span>
                     <span class="ms-3">2h 8min</span>
-                    @if (Model.Category != null){
-                    <span class="ms-3">@Model.Category.Name</span>
+                    @if (Model.Movie.Category != null){
+                    <span class="ms-3">@Model.Movie.Category.Name</span>
                     }
                     <span class="ms-3">2017</span>
                     <span class="badge bg-success text-dark ms-3">Available</span>
@@ -47,16 +48,16 @@
                     <div class="col-sm-6">
                         <h5 class="bg-dark mb-3">Details</h5>
                         <ul class="list-unstyled text-muted small ">
-                            <li class="text-light">Price: $@Model.Price</li>
-                            @if (Model.Cinema is not null)
+                            <li class="text-light">Price: $@Model.Movie.Price</li>
+                            @if (Model.Movie.Cinema is not null)
                             {
-                            <li class="text-light">Cinema: @Model.Cinema.Name</li>
+                            <li class="text-light">Cinema: @Model.Movie.Cinema.Name</li>
                             }
-                            <li class="text-light">Start Date: @Model.StartDate</li>
-                            <li class="text-light">End Date: @Model.EndDate</li>
-                            @if(@Model.Category is not null)
+                            <li class="text-light">Start Date: @Model.Movie.StartDate</li>
+                            <li class="text-light">End Date: @Model.Movie.EndDate</li>
+                            @if(@Model.Movie.Category is not null)
                             {
-                            <li class="text-light">Category: @Model.Category.Name</li>
+                            <li class="text-light">Category: @Model.Movie.Category.Name</li>
                             }
                             <li class="text-light">Writers: Damien Chazelle</li>
 
@@ -64,77 +65,53 @@
                     </div>
                     <div class="col-sm-6">
                         <h5 class="ms-2 bg-dark mb-3">Cast</h5>
-                        @* <ul class="list-unstyled">
-                            @foreach(var actors in Model.Actors)
+                        <ul class="list-unstyled">
+                            @if(Model.Movie.Actors is not null)
+                            {    
+                            @foreach(var actors in Model.Movie.Actors)
                             {
+                                    <a asp-area="Customer" asp-controller="Home" asp-action="Actor" asp-route-id="@actors.Id">
                             <li><i class="fas fa-user-circle me-2"></i>@actors.FirstName @actors.LastName</li>
+                            </a>
                             }
-                        </ul> *@
+                            }
+                        </ul>
                     </div>
                 </div>
                 </div>
                 
 
-         </div>
-            @* <div class="col-md-3">
+            <div class="col-md-3">
                 <h5>Gallery</h5>
                 <div class="trailer">
                     <h2>Trailer</h2>
-                   
-                    <iframe width="450" height="315" src="@Model.TrailerUrl" frameborder="0" allowfullscreen></iframe>
+
+
+                    @* <iframe width="450" height="315" src="@Model.Movie.TrailerUrl" frameborder="0" allowfullscreen></iframe> *@
+                <iframe width="450" height="315" src="https://www.youtube.com/embed/OpThntO9ixc?si=c15OR6lyN22U8NM-" frameborder="0" allowfullscreen></iframe>
                 </div>
-            </div> *@
+            </div>
+         </div>
 
             <hr class="my-5 border-white-50" />
 
             <section>
                 <h4><i class="fas fa-film me-2"></i>Similar Movies</h4>
                 <div class="row row-cols-2 row-cols-md-5 g-3 mt-3">
+                    @foreach(var movie in Model.Movies)
+                    {
+                    <a asp-area ="Customer" asp-controller="Home" asp-action="Movie" asp-route-id="@movie.Id">
                     <div class="col">
-                        <div class="card bg-dark text-white border-0 h-100">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0fbe922-a7b9-4745-bc87-bde69777f0fa.png" class="card-img-top" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
-                            <div class="card-body p-2">
-                                <h6 class="card-title m-0">Arrival</h6>
-                                <small>★★★★☆ 4.5</small>
+                            <div class="card bg-dark text-white border-0 h-100">
+                            <img src="~/img/@movie.ImgUrl" class="card-img-top" height="350" width="100" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
+                                <div class="card-body p-2">
+                                    <h6 class="card-title m-0">@movie.Category.Name</h6>
+                                    <small>★★★★☆ 4.5</small>
+                                </div>
                             </div>
-                        </div>
                     </div>
-                    <div class="col">
-                        <div class="card bg-dark text-white border-0 h-100">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/85433b1d-4069-4915-9781-2daa9af4b622.png" class="card-img-top" alt="Movie poster for Fences showing 2 men and a woman in conversation" />
-                            <div class="card-body p-2">
-                                <h6 class="card-title m-0">Fences</h6>
-                                <small>★★★★☆ 6.8</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card bg-dark text-white border-0 h-100">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/288777e3-8c03-4ac8-b39c-6c7636617f06.png" class="card-img-top" alt="Movie poster for Hacksaw Ridge showing a soldier carrying a wounded comrade" />
-                            <div class="card-body p-2">
-                                <h6 class="card-title m-0">Hacksaw Ridge</h6>
-                                <small>★★★★☆ 6.3</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card bg-dark text-white border-0 h-100">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2ce11d99-d1a8-4ab3-9bfb-c1ddaf372db9.png" class="card-img-top" alt="Movie poster for Lion showing a young man and a child resting heads together" />
-                            <div class="card-body p-2">
-                                <h6 class="card-title m-0">Lion</h6>
-                                <small>★★★☆☆ 7.3</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card bg-dark text-white border-0 h-100">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d453510c-a304-4721-86f8-cbcfe409639d.png" class="card-img-top" alt="Movie poster for Manchester by the Sea showing two men walking by the sea" />
-                            <div class="card-body p-2">
-                                <h6 class="card-title m-0">Manchester by the Sea</h6>
-                                <small>★★★☆☆ 7.6</small>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
+                    }
                 </div>
                 <div class="text-center mt-4">
                     <button class="btn btn-outline-light btn-sm">Show More</button>

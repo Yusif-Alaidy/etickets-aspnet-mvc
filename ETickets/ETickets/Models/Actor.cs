@@ -16,6 +16,5 @@ public partial class Actor
     public string? ProfilePicture { get; set; }
 
     public string? News { get; set; }
-
     public List<Movie> Movies { get; set; }
 }
