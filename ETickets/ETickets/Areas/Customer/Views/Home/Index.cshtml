@@ -1,4 +1,5 @@
-﻿@model List<Movie>
+﻿@using ETickets.ViewModel
+@model Home
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -25,46 +26,63 @@
         <section class="container my-2 bg-black">
             <div class="card shadow-sm bg-black text-light">
                 <form>
+                <input hidden class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="@ViewBag.Search" />
                     <div class="row g-3">
                         <!-- Price Filter -->
                         <div class="col-md-3">
                             <label for="minPrice" class="form-label">Min Price</label>
-                            <input type="number" class="form-control" id="minPrice" placeholder="0">
+                            <input type="number" class="form-control" id="minPrice" placeholder="0" name="minPrice" value="@ViewBag.MinPrice">
                         </div>
                         <div class="col-md-3">
                             <label for="maxPrice" class="form-label">Max Price</label>
-                            <input type="number" class="form-control" id="maxPrice" placeholder="1000">
+                        <input type="number" class="form-control" id="maxPrice" placeholder="1000" name="maxPrice" value="@ViewBag.MaxPrice">
                         </div>
 
                         <!-- Category Filter -->
                         <div class="col-md-3">
                             <label for="category" class="form-label">Category</label>
-                            <select class="form-select" id="category">
+                        <select class="form-select" id="category" name="categoryId">
                                 <option value="">All</option>
-                                <option value="electronics">Electronics</option>
-                                <option value="clothes">Clothes</option>
-                                <option value="books">Books</option>
+                            @foreach (var cat in Model.Categories)
+                            {
+                                @if (cat.Id == ViewBag.CategoryId)
+                                {
+                                    <option selected value="@cat.Id" action="">@cat.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@cat.Id" action="">@cat.Name</option>
+                                }
+                            }
+                                
                             </select>
                         </div>
 
                         <!-- Cinema Filter -->
                         <div class="col-md-3">
                             <label for="cinema" class="form-label">Cinema</label>
-                            <select class="form-select" id="cinema">
+                            <select class="form-select" id="cinema" name="cinemaId">
                                 <option value="">All</option>
-                                <option value="cinema1">Cinema 1</option>
-                                <option value="cinema2">Cinema 2</option>
-                                <option value="cinema3">Cinema 3</option>
+                                @foreach (var cat in Model.Cinemas)
+                                {
+                                @if (cat.Id == ViewBag.CinemaId)
+                                {
+                                    <option selected value="@cat.Id" action="">@cat.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@cat.Id" action="">@cat.Name</option>
+                                }
+                                }
                             </select>
                         </div>
                        
 
-
-
                         <!-- Submit Button -->
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-primary btn-sm">Apply Filter</button>
-                            <button type="reset" class="btn btn-outline-secondary btn-sm">Reset</button>
+                        <button type="submit" class="btn  btn-sm" style="background-color:#317d7c">Apply Filter</button>
+                        <a class="btn btn-outline-secondary btn-sm" asp-area="Customer" asp-controller="Home" asp-action="Index">Reset</a>
+
                         </div>
                     </div>
                 </form>
@@ -79,7 +97,7 @@
 
             <div class="row row-cols-2 row-cols-md-5 g-3 mt-3 container">
 
-                @foreach (var Movie in Model)
+                @foreach (var Movie in Model.Movies)
                 {
                     @* Card *@
                     <div class="col">
@@ -116,18 +134,21 @@
         <section>
             <h3 class="text-center text-uppercase mt-4">Watch Now</h3>
             <div class="row row-cols-2 row-cols-md-5 g-3 mt-3 container">
-                @foreach (var Movie in Model)
+                @foreach (var Movie in Model.Movies)
                 {
                     @* Card *@
                     <div class="col">
                         <div class="card bg-dark text-white border-0 h-100">
                         <a asp-area="Customer" asp-controller="Home" asp-action="Movie" asp-route-id="@Movie.Id">
-                                <img src="~/img/@Movie.ImgUrl" class="card-img-top" height="250" width="100" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
+                                <img src="~/img/@Movie.ImgUrl" class="card-img-top" height="350" width="150" alt="Movie poster for Arrival showing a woman looking at a spaceship" />
+                            <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">@Movie.Category.Name</span>
+
                             </a>
-                            <div class="card-body p-2">
+                            <div class="card-body p-2 mt-2">
                                 <div class="row">
                                     <div class="col">
-                                        <p class="fs-7 mt-1 mb-0 pt-0 pb-0 ms-1 " style="opacity: 0.3;">@Movie.Category.Name</p>
+                                        @* <p class="fs-7 m-0 p-0 " style="opacity: 0.3;">@Movie.Category.Name</p> *@
+                                        <p class="fs-7 m-0 p-0" style="opacity: 0.3; height: 70px">@Movie.Name</p>
                                     </div>
                                     <div class="col-md-4 mb-0 pb-0">
                                         <h6>
@@ -138,7 +159,7 @@
                                     </div>
                                 </div>
                                 <small class="me-2">★★★★☆ 4.5</small>
-                                <input type="button" class="btn btn-success btn-sm ms-5 mb-2 " value="Book Now" />
+                            <input type="button" class="btn btn-sm ms-5 mb-2 " style="background-color:#317d7c" value="Book Now" />
                             </div>
                         </div>
                     </div>
