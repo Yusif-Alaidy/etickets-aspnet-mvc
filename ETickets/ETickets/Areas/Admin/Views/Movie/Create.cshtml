@@ -1,0 +1,90 @@
+﻿
+<div class="container">
+    <div class="row mb-3 align-items-center my-3">
+        <div class="col-md-6">
+            <h2 class="display-6">Create new Movie</h2>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input class="form-control" id="name" name="Name" placeholder="Movie Name">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a description here" style="height: 100px" name="Description"></textarea>
+                        <label for="description">You Description Here...</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="Price" placeholder="Price">
+                </div>
+                <div class="mb-3">
+                    <label for="Img" class="form-label">Img</label>
+                    <input type="file" class="form-control" id="Img" name="ImgUrl" accept="image/*" placeholder="Poster">
+                </div>
+                <div class="mb-3">
+                    <label for="Img" class="form-label">Trailer</label>
+                    <input type="file" class="form-control" id="TrailerImg" name="TrailerUrl" accept="image/*" placeholder="TrailermUrl">
+                </div>
+                <div class="mb-3">
+                    <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="StartDate" class="form-label">Start date</label>
+                    <input type="date" class="form-control" id="startDate" name="StartDate" placeholder="Start Date">
+                </div>
+
+                <div class="mb-3">
+                    <label for="EndDate" class="form-label">End date</label>
+                    <input type="date" class="form-control" id="EndtDate" name="EndDate" placeholder="End Date">
+                </div>
+
+                <div class="mb-3">
+                    <label for="MovieStatus" class="form-label">Status</label>
+                    <select class="form-select" name="MovieStatus">
+                        <option value="" >Movie Status</option>
+                        <option value="0" >Not Active</option>
+                        <option value="1">Active</option>
+                        <option value="2">Comming soon</option>
+                    </select>      
+                </div>
+                <div class="mb-3">
+                    <label for="CinemaId" class="form-label">Cinema Name</label>
+                    @* <input type="number" class="form-control" id="CategoryId" name="CategoryId"> *@
+                    <select name="CinemaId" class="form-select">           
+                            <option value="">Cienma</option>
+                            <option value="">Dummy data</option>
+                            <option value="">Dummy data</option>
+                            <option value="">Dummy data</option>
+                        
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="CategoryId" class="form-label">Category Name</label>
+                    <select name="CategoryId" class="form-select">
+                             <option value="">Category</option>  
+                             <option value="">dummy data</option>  
+                             <option value="">dummy data</option>  
+                             <option value="">dummy data</option>  
+                     </select>
+
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById("preview");
+</script>

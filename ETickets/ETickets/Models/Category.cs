@@ -9,5 +9,5 @@ public partial class Category
 
     public string Name { get; set; } = null!;
 
-    public List<Movie> Movies { get; set; }
+    public List<Movie>? Movies { get; set; }
 }

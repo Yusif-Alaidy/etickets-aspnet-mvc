@@ -128,7 +128,7 @@ namespace ETickets.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("CinemaId")
@@ -193,9 +193,7 @@ namespace ETickets.Migrations
                 {
                     b.HasOne("ETickets.Models.Category", "Category")
                         .WithMany("Movies")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("ETickets.Models.Cinema", "Cinema")
                         .WithMany("Movies")
