@@ -14,5 +14,5 @@ public partial class Cinema
     public string? CinemaLogo { get; set; }
 
     public string? Address { get; set; }
-    public List<Movie> Movies { get; set; }
+    public List<Movie>? Movies { get; set; }
 }

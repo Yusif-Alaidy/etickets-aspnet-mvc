@@ -24,8 +24,8 @@ public partial class Movie
     public int MovieStatus { get; set; }
 
     public int CinemaId { get; set; }
-    public Cinema Cinema { get; set; }
-    public int CategoryId { get; set; }
-    public Category Category { get; set; }
-    public List<Actor> Actors { get; set; }
+    public Cinema? Cinema { get; set; }
+    public int? CategoryId { get; set; }
+    public Category? Category { get; set; }
+    public List<Actor>? Actors { get; set; }
 }
