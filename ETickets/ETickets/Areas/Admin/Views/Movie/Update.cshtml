@@ -1,0 +1,116 @@
+﻿@using ETickets.ViewModel
+@model UpdateMovieVM
+
+<div class="container">
+    <div class="row mb-3 align-items-center my-3">
+        <div class="col-md-6">
+            <h2 class="display-6">Update new Movie</h2>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Movie.Id" />
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input class="form-control" asp-for="Movie.Name" placeholder="Movie Name">
+                    <span asp-validation-for="Movie.Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" asp-for="Movie.Description" style="height:100px"></textarea>
+                    <span asp-validation-for="Movie.Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" asp-for="Movie.Price" placeholder="Price">
+                    <span asp-validation-for="Movie.Price" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="Img" class="form-label">Img</label>
+                    <input type="file" class="form-control" id="Img" name="ImgUrl" accept="image/*" placeholder="Poster" value="@Model.Movie.ImgUrl">
+                </div>
+                <div class="mb-3">
+                    <label for="Img" class="form-label">Trailer</label>
+                    <input type="url" class="form-control" id="TrailerImg" name="TrailerUrl" accept="url" placeholder="TrailermUrl" value="@Model.Movie.TrailerUrl">
+                </div>
+                <div class="mb-3">
+                    <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="StartDate" class="form-label">Start date</label>
+                    <input type="date" class="form-control" asp-for="Movie.StartDate" required>
+                    <span asp-validation-for="Movie.StartDate" class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="EndDate" class="form-label">End date</label>
+                    <input type="date" class="form-control" asp-for="Movie.EndDate" required>
+                    <span asp-validation-for="Movie.EndDate" class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="MovieStatus" class="form-label">Status</label>
+                    <select class="form-select" name="MovieStatus">
+                        <option value="">Movie Status</option>
+                        @if (Model.Movie.MovieStatus == 0)
+                        {
+                            <option selected value="0">Not Active</option>
+
+                        }
+                        else
+                        {
+                            <option  value="0">Not Active</option>
+                            
+                        }
+                        @if (Model.Movie.MovieStatus == 1)
+                        {
+                            <option selected value="1">Active</option>
+
+                        }
+                        else
+                        {
+                            <option value="1">Active</option>
+
+                        }
+                        @if (Model.Movie.MovieStatus == 2)
+                        {
+                            <option selected value="2">Comming soon</option>
+                        }
+                        else
+                        {
+                            <option value="2">Comming soon</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="CinemaId" class="form-label">Cinema Name</label>
+                    @* <input type="number" class="form-control" id="CategoryId" name="CategoryId"> *@
+                    <select class="form-select" asp-for="Movie.CinemaId" asp-items="@(new SelectList(Model.Cinema, "Id", "Name"))"></select>
+
+                </div>
+                <div class="mb-3">
+                    <label for="CategoryId" class="form-label">Category Name</label>
+                    <select class="form-select" asp-for="Movie.CategoryId" asp-items="@(new SelectList(Model.Category, "Id", "Name"))"></select>
+
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById("preview");
+</script>

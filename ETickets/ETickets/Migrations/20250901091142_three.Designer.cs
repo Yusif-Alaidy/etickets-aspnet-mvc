@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETickets.Migrations
 {
     [DbContext(typeof(CineBookContext))]
-    [Migration("20250827075342_addNavigationProp")]
-    partial class addNavigationProp
+    [Migration("20250901091142_three")]
+    partial class three
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,8 +144,10 @@ namespace ETickets.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("ImgUrl")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasDefaultValue("default.png");
 
                     b.Property<int>("MovieStatus")
                         .HasColumnType("int");

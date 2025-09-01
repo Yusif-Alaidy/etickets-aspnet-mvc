@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETickets.Migrations
 {
     [DbContext(typeof(CineBookContext))]
-    [Migration("20250827040705_initDb")]
-    partial class initDb
+    [Migration("20250831080225_.")]
+    partial class _
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,7 @@ namespace ETickets.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("ImgUrl")
+                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -168,6 +169,10 @@ namespace ETickets.Migrations
                     b.HasKey("Id")
                         .HasName("PK__Movies__3214EC079CCC2664");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CinemaId");
+
                     b.ToTable("Movies");
                 });
 
@@ -186,6 +191,35 @@ namespace ETickets.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_ActorMovies_Movies");
+                });
+
+            modelBuilder.Entity("ETickets.Models.Movie", b =>
+                {
+                    b.HasOne("ETickets.Models.Category", "Category")
+                        .WithMany("Movies")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ETickets.Models.Cinema", "Cinema")
+                        .WithMany("Movies")
+                        .HasForeignKey("CinemaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Cinema");
+                });
+
+            modelBuilder.Entity("ETickets.Models.Category", b =>
+                {
+                    b.Navigation("Movies");
+                });
+
+            modelBuilder.Entity("ETickets.Models.Cinema", b =>
+                {
+                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }
