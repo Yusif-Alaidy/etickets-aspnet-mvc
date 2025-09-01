@@ -13,7 +13,7 @@ public partial class Movie
 
     public decimal Price { get; set; }
 
-    public string? ImgUrl { get; set; }
+    public string? ImgUrl { get; set; } = "default.png";
 
     public string? TrailerUrl { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Movie
 
     public int CinemaId { get; set; }
     public Cinema? Cinema { get; set; }
-    public int? CategoryId { get; set; }
+    public int CategoryId { get; set; }
     public Category? Category { get; set; }
     public List<Actor>? Actors { get; set; }
 }

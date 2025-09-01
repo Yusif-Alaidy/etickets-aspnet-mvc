@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETickets.Migrations
 {
     [DbContext(typeof(CineBookContext))]
-    [Migration("20250830171433_addnull")]
-    partial class addnull
+    [Migration("20250831070947_fixSomeBugs")]
+    partial class fixSomeBugs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,7 +131,7 @@ namespace ETickets.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("CinemaId")
@@ -196,7 +196,9 @@ namespace ETickets.Migrations
                 {
                     b.HasOne("ETickets.Models.Category", "Category")
                         .WithMany("Movies")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ETickets.Models.Cinema", "Cinema")
                         .WithMany("Movies")

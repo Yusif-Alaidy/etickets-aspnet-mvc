@@ -1,4 +1,6 @@
-﻿
+﻿@using ETickets.ViewModel
+@model CreateMovieVM
+
 <div class="container">
     <div class="row mb-3 align-items-center my-3">
         <div class="col-md-6">
@@ -30,7 +32,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="Img" class="form-label">Trailer</label>
-                    <input type="file" class="form-control" id="TrailerImg" name="TrailerUrl" accept="image/*" placeholder="TrailermUrl">
+                    <input type="url" class="form-control" id="TrailerImg" name="TrailerUrl" accept="url" placeholder="TrailermUrl">
                 </div>
                 <div class="mb-3">
                     <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
@@ -59,10 +61,11 @@
                     <label for="CinemaId" class="form-label">Cinema Name</label>
                     @* <input type="number" class="form-control" id="CategoryId" name="CategoryId"> *@
                     <select name="CinemaId" class="form-select">           
-                            <option value="">Cienma</option>
-                            <option value="">Dummy data</option>
-                            <option value="">Dummy data</option>
-                            <option value="">Dummy data</option>
+                            <option value="">the List</option>
+                        @foreach (var cinema in Model.Cinemas)
+                        {
+                            <option value="@cinema.Id">@cinema.Name</option>
+                        }
                         
                     </select>
                 </div>
@@ -70,10 +73,11 @@
                     <label for="CategoryId" class="form-label">Category Name</label>
                     <select name="CategoryId" class="form-select">
                              <option value="">Category</option>  
-                             <option value="">dummy data</option>  
-                             <option value="">dummy data</option>  
-                             <option value="">dummy data</option>  
-                     </select>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
+                    </select>
 
                 </div>
                 

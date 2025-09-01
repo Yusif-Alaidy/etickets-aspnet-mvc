@@ -20,6 +20,7 @@ namespace ETickets.Areas.Customer.Controllers
             Home data = new();
             var categories = _context.Categories;
             var cinemas = _context.Cinemas;
+            //var movies = _context.Movies.Include(e => e.Category).Include(e => e.Cinema).AsQueryable();
             var movies = _context.Movies.Include(e => e.Category).Include(e => e.Cinema).AsQueryable();
             if (movies is null) return NotFound();
 
@@ -69,7 +70,12 @@ namespace ETickets.Areas.Customer.Controllers
             // -------------------------------------------------------------------------------------------
 
            
-            movies = movies.Skip((page-1)*10).Take(10);
+            //movies = movies.Skip((page-1)*10).Take(10);
+            if (movies is null)
+            {
+                return NoContent();
+            }
+            Console.WriteLine(movies.Count());
             data.Movies = movies.ToList();
             data.Categories = categories.ToList();
             data.Cinemas = cinemas.ToList();
