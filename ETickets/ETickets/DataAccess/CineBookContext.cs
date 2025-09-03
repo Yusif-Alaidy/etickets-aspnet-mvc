@@ -25,9 +25,9 @@ public partial class CineBookContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
  
-    modelBuilder.Entity<Movie>()
-            .Property(m => m.ImgUrl)
-            .HasDefaultValue("default.png");
+    //modelBuilder.Entity<Movie>()
+    //        .Property(m => m.ImgUrl)
+    //        .HasDefaultValue("default.png");
 
     modelBuilder.Entity<Actor>(entity =>
         {

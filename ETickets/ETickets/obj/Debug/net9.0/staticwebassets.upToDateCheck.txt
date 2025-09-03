@@ -7,7 +7,10 @@ wwwroot\css\admin\styles.css
 wwwroot\css\site.css
 wwwroot\css\styles.css
 wwwroot\favicon.ico
+wwwroot\img\0d71f935-ac2b-4a32-8bd8-d5fd55a74ddf.jpg
+wwwroot\img\1e7c0ef3-0f37-4828-8c5f-90f281136959.jpg
 wwwroot\img\actor1.jpg
+wwwroot\img\avenger.jpg
 wwwroot\img\cast\cast1.png
 wwwroot\img\cast\cast2.png
 wwwroot\img\cast\cast3.png

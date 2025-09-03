@@ -141,10 +141,9 @@ namespace ETickets.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("ImgUrl")
-                        .ValueGeneratedOnAdd()
+                        .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasDefaultValue("default.png");
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("MovieStatus")
                         .HasColumnType("int");

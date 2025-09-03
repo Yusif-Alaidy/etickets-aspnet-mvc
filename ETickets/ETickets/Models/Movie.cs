@@ -13,7 +13,7 @@ public partial class Movie
 
     public decimal Price { get; set; }
 
-    public string? ImgUrl { get; set; } = "default.png";
+    public string ImgUrl { get; set; }
 
     public string? TrailerUrl { get; set; }
 
