@@ -72,10 +72,10 @@ namespace ETickets.Areas.Admin.Controllers
         }
         public IActionResult Delete(int id)
         {
-            var Actor = _context.Categories.FirstOrDefault(e => e.Id == id);
+            var Actor = _context.Actors.FirstOrDefault(e => e.Id == id);
             if (Actor is null) return NoContent();
 
-            _context.Categories.Remove(Actor);
+            _context.Actors.Remove(Actor);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
