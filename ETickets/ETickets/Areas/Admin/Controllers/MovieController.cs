@@ -37,8 +37,27 @@ namespace ETickets.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Movie movie)
+        public IActionResult Create(Movie movie, IFormFile ImgUrl)
         {
+            if (ImgUrl is null)
+                return BadRequest();
+
+            if (ImgUrl.Length > 0)
+            {
+                // Save img in wwwroot
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
+                // djsl-kds232-91321d-sadas-dasd213213.png
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    ImgUrl.CopyTo(stream);
+                }
+
+                // Save img in DB
+                movie.ImgUrl = fileName;
+            }
+
             var categories = _context.Categories.ToList();
             var cinemas = _context.Cinemas.ToList();
             if (categories is null || cinemas is null) return NoContent();
@@ -100,7 +119,8 @@ namespace ETickets.Areas.Admin.Controllers
             dbMovie.Name = movie.Name;
             dbMovie.Description = movie.Description;
             dbMovie.Price = movie.Price;
-            dbMovie.ImgUrl = movie.ImgUrl;
+            if (movie.ImgUrl is not null) dbMovie.ImgUrl = movie.ImgUrl;
+            else dbMovie.ImgUrl = "default.png";
             dbMovie.TrailerUrl = movie.TrailerUrl;
             dbMovie.StartDate = movie.StartDate;
             dbMovie.EndDate = movie.EndDate;

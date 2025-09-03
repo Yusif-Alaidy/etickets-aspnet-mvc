@@ -1,0 +1,54 @@
+﻿@using ETickets.Models
+@model List<Actor>
+
+@{
+    var quantity = 10;
+}
+
+
+<div class="container">
+    <div class="row mb-3 align-items-center my-3">
+        <div class="col-md-6">
+            <h2 class="display-6">All Cinema</h2>
+        </div>
+        <div class="col-md-6 text-md-end text-start mt-2 mt-md-0">
+            <a asp-area="admin" asp-controller="Cinema" asp-action="Create" class="btn btn-success">Create</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Bio</th>
+                        <th scope="col">ProfilePicture</th>
+                        <th scope="col">News</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.Id</th>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.Bio</td>
+                            <td>@item.ProfilePicture</td>
+                            <td>@item.News</td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Actor" asp-action="Update" asp-route-Id="@item.Id" type="button" class="btn btn-warning">Edit</a>
+                                <a asp-area="Admin" asp-controller="Actor" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger btn-delete">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
