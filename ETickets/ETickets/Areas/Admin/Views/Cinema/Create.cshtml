@@ -31,12 +31,13 @@
                 </div>
                 <div class="mb-3">
                     <label for="Img" class="form-label">Img</label>
-                    <input type="file" class="form-control" asp-for="CinemaLogo" placeholder="Poster">
+                    <input type="file" class="form-control" asp-for="CinemaLogo" placeholder="Poster" accept="image/*" onchange="previewImage(event)">
                 </div>
-     
                 <div class="mb-3">
                     <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
                 </div>
+     
+
 
 
                 
@@ -51,4 +52,19 @@
     function previewImage(event) {
         const input = event.target;
         const preview = document.getElementById("preview");
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = "block";
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = "#";
+            preview.style.display = "none";
+        }
+    }
 </script>

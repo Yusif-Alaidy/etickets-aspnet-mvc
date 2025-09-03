@@ -7,18 +7,33 @@ wwwroot\css\admin\styles.css
 wwwroot\css\site.css
 wwwroot\css\styles.css
 wwwroot\favicon.ico
+wwwroot\img\023ed100-1728-43cc-b722-00a0f9cf9094.webp
 wwwroot\img\0d71f935-ac2b-4a32-8bd8-d5fd55a74ddf.jpg
 wwwroot\img\1e7c0ef3-0f37-4828-8c5f-90f281136959.jpg
+wwwroot\img\20229c28-c05b-4632-88bd-b459dd26d23e.webp
+wwwroot\img\5a8a6bbc-cf75-4cfc-8e99-35d6343a6bb7.jpg
+wwwroot\img\6534cf0d-23f9-4c05-abda-e8bef1606c34.webp
+wwwroot\img\674cea25-ce20-4c19-a2d8-fd1cb677a6bf.jpg
+wwwroot\img\856ff1e9-4461-4e12-a3d2-4eabaae8ff4b.webp
 wwwroot\img\actor1.jpg
 wwwroot\img\avenger.jpg
+wwwroot\img\b80dfdb9-da0b-4b50-bc3e-32c5eaba2526.webp
 wwwroot\img\cast\cast1.png
 wwwroot\img\cast\cast2.png
 wwwroot\img\cast\cast3.png
 wwwroot\img\cast\cast4.png
 wwwroot\img\cast\cast5.png
 wwwroot\img\cast\cast6.png
+wwwroot\img\cinemas\Cinema Heliopolis.png
+wwwroot\img\cinemas\City Mall Cinema.jpg
+wwwroot\img\cinemas\Default.webp
+wwwroot\img\cinemas\Galaxy Cinema.jpg
+wwwroot\img\cinemas\VOX Cinemas.webp
+wwwroot\img\da8d4a31-9f00-49ec-9757-6b7ded933b3c.jpg
+wwwroot\img\de6f68da-a57d-4171-9fa8-52455f20850c.jpg
 wwwroot\img\default.png
 wwwroot\img\default2.jpg
+wwwroot\img\e507dadd-c043-480d-b31f-d20ef8779e0b.jpg
 wwwroot\img\movie1.png
 wwwroot\img\movie10.png
 wwwroot\img\movie2.png

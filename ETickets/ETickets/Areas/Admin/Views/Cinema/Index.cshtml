@@ -26,6 +26,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Description</th>
                             <th scope="col">Address</th>
+                            <th scope="col">CinemaLogo</th>
 
                         </tr>
                     </thead>
@@ -37,6 +38,7 @@
                                 <td>@item.Name</td>
                                 <td>@item.Description</td>
                                 <td>@item.Address</td>
+                                <td>@item.CinemaLogo</td>
                                 <td>
                                 <a asp-area="Admin" asp-controller="Cinema" asp-action="Update" asp-route-Id="@item.Id" type="button" class="btn btn-warning">Edit</a>
                                 <a asp-area="Admin" asp-controller="Cinema" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger btn-delete">Delete</a>

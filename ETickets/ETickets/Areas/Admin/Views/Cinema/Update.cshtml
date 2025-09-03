@@ -10,7 +10,7 @@
 
     <div class="row my-3">
         <div class="col-12">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data" asp-action="Update">
                 <input type="hidden" asp-for="Id" />
 
                 <div class="mb-3">
@@ -34,12 +34,17 @@
                
                 <div class="mb-3">
                     <label for="Img" class="form-label">Img</label>
-                    <input type="file" class="form-control" id="Img" name="ImgUrl" accept="image/*" placeholder="Poster" value="@Model.CinemaLogo">
+                    <input class="form-control" asp-for="CinemaLogo" placeholder="Movie Name">
+                    <input type="file" class="form-control" asp-for="CinemaLogo" placeholder="Poster" accept="image/*" onchange="previewImage(event)">
                 </div>
 
                 <div class="mb-3">
-                    <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />
+                    <img id="preview"
+                         src="~/images/@Model.CinemaLogo"
+                         alt="Current Image"
+                         style="max-width: 200px; border:1px solid #ccc; padding:5px; border-radius:10px;" />
                 </div>
+
 
 
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -48,3 +53,18 @@
     </div>
 </div>
 
+
+<script>
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById("preview");
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result; // الصورة الجديدة
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
