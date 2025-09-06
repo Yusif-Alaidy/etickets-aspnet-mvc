@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Reposatries\" />
     <Folder Include="wwwroot\assets\admin\demo\" />
     <Folder Include="wwwroot\assets\admin\img\" />
   </ItemGroup>

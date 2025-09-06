@@ -1,4 +1,5 @@
 using ETickets.DataAccess;
+using ETickets.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETickets
@@ -13,6 +14,7 @@ namespace ETickets
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<CineBookContext>( options => options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase") ) );
+            builder.Services.AddScoped<Repository>();
 
             var app = builder.Build();
 

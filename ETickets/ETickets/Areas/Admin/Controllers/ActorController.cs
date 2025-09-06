@@ -1,6 +1,8 @@
 ﻿using ETickets.DataAccess;
 using ETickets.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ETickets.Areas.Admin.Controllers
 {
@@ -13,12 +15,12 @@ namespace ETickets.Areas.Admin.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var Actors = _context.Actors;
             if (Actors is null) return NotFound();
 
-            return View(Actors.ToList());
+            return View(Actors.ToListAsync());
         }
 
         [HttpGet]
@@ -27,7 +29,7 @@ namespace ETickets.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Actor Actor, IFormFile ProfilePicture)
+        public async Task<IActionResult> Create(Actor Actor, IFormFile ProfilePicture)
         {
 
             if (ProfilePicture is null)
@@ -42,22 +44,22 @@ namespace ETickets.Areas.Admin.Controllers
 
                 using (var stream = System.IO.File.Create(filePath))
                 {
-                    ProfilePicture.CopyTo(stream);
+                    ProfilePicture.CopyToAsync(stream);
                 }
 
                 // Save img in DB
                 Actor.ProfilePicture = fileName;
             }
 
-            _context.Actors.Add(Actor);
-            _context.SaveChanges();
+            await _context.Actors.AddAsync(Actor);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
-        public IActionResult Update(int Id)
+        public async Task<IActionResult> Update(int Id)
         {
-            var Actor = _context.Actors.FirstOrDefault(c => c.Id == Id);
+            var Actor = await _context.Actors.FirstOrDefaultAsync(c => c.Id == Id);
             if (Actor is null) return NotFound();
 
             return View(Actor);
