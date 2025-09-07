@@ -10,11 +10,9 @@ namespace ETickets.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
 
-        //private CineBookContext _context;
-        private Repository _repository;
-        public CategoryController(Repository repository)
+        private Repository<Category> _repository;
+        public CategoryController(Repository<Category> repository)
         {
-            //_context = context;
             _repository = repository;
         }
 

@@ -1,5 +1,6 @@
 ﻿using ETickets.DataAccess;
 using ETickets.Models;
+using ETickets.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -9,18 +10,19 @@ namespace ETickets.Areas.Admin.Controllers
     [Area("Admin")]
     public class ActorController : Controller
     {
-        private CineBookContext _context;
-        public ActorController(CineBookContext context)
+
+        private Repository<Actor> _repository;
+        public ActorController(Repository<Actor> repo)
         {
-            _context = context;
+            _repository = repo;
         }
 
         public async Task<IActionResult> Index()
         {
-            var Actors = _context.Actors;
+            var Actors = await _repository.GetAsync();
             if (Actors is null) return NotFound();
 
-            return View(Actors.ToListAsync());
+            return View(Actors);
         }
 
         [HttpGet]
@@ -51,34 +53,37 @@ namespace ETickets.Areas.Admin.Controllers
                 Actor.ProfilePicture = fileName;
             }
 
-            await _context.Actors.AddAsync(Actor);
-            await _context.SaveChangesAsync();
+            
+            await _repository.AddAsync(Actor);
+            await _repository.CommitAsync();
 
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         public async Task<IActionResult> Update(int Id)
         {
-            var Actor = await _context.Actors.FirstOrDefaultAsync(c => c.Id == Id);
+            var Actor = await _repository.GetOneAsync(c => c.Id == Id);
             if (Actor is null) return NotFound();
 
             return View(Actor);
         }
         [HttpPost]
-        public IActionResult Update(Actor Actor)
+        public async Task<IActionResult> Update(Actor Actor)
         {
 
-            _context.Actors.Update(Actor);
-            _context.SaveChanges();
+            await _repository.Update(Actor);
+            await _repository.CommitAsync();
+
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            var Actor = _context.Actors.FirstOrDefault(e => e.Id == id);
+
+            var Actor = await _repository.GetOneAsync(e => e.Id == Id);
             if (Actor is null) return NoContent();
 
-            _context.Actors.Remove(Actor);
-            _context.SaveChanges();
+            await _repository.DeleteAsync(Actor);
+            await _repository.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
     }

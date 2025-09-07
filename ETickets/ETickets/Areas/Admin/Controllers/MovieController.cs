@@ -1,31 +1,41 @@
 ﻿using ETickets.DataAccess;
 using ETickets.Models;
+using ETickets.Repositories;
 using ETickets.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class MovieController : Controller
     {
-        private readonly CineBookContext _context;
-        public MovieController(CineBookContext context)
+        //private readonly CineBookContext _context;
+
+        private Repository<Movie> _repository;
+        private Repository<Category> _repositoryCategory;
+        private Repository<Cinema> _repositoryCinema;
+
+        public MovieController(Repository<Movie> repository, Repository<Category> repositoryCategory, Repository<Cinema> repositoryCinema)
         {
-            _context = context;
+            _repository = repository;
+            _repositoryCategory = repositoryCategory;
+            _repositoryCinema = repositoryCinema;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var movies = _context.Movies.Include(e => e.Category).Include(e => e.Cinema);
-            return View(movies.ToList());
+            var movies = await _repository.GetAsync(include: [e=> e.Category!, e=> e.Cinema!]);
+            return View(movies);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var categories =_context.Categories.ToList();
-            var cinemas = _context.Cinemas.ToList();
+            
+            var categories = await _repositoryCategory.GetAsync();
+            var cinemas = await _repositoryCinema.GetAsync();
             if (categories is null || cinemas is null) return NoContent(); 
             var data = new CreateMovieVM 
             { 
@@ -37,7 +47,7 @@ namespace ETickets.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Movie movie, IFormFile ImgUrl)
+        public async Task<IActionResult> Create(Movie movie, IFormFile ImgUrl)
         {
             if (ImgUrl is null)
                 return BadRequest();
@@ -58,8 +68,10 @@ namespace ETickets.Areas.Admin.Controllers
                 movie.ImgUrl = fileName;
             }
 
-            var categories = _context.Categories.ToList();
-            var cinemas = _context.Cinemas.ToList();
+
+            var categories = await _repositoryCategory.GetAsync();
+            var cinemas = await _repositoryCinema.GetAsync();
+
             if (categories is null || cinemas is null) return NoContent();
             var data = new CreateMovieVM
             {
@@ -67,27 +79,30 @@ namespace ETickets.Areas.Admin.Controllers
                 Cinemas = cinemas
             };
 
-            _context.Movies.Add(movie);
-            _context.SaveChanges();
+       
+
+            await _repository.GetAsync();
+            await _repository.CommitAsync();
+
             return RedirectToAction(nameof(Index));
-            //return View(data);
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int Id)
         {
-            var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
+            var movie = await _repository.GetOneAsync(e => e.Id == Id);
 
-            var Categories = _context.Categories.ToList();
-            var Cinemas = _context.Cinemas.ToList();
+            
+            var categories = await _repositoryCategory.GetAsync();
+            var cinemas = await _repositoryCinema.GetAsync();
 
             if (movie == null) 
                 return NoContent();
 
             UpdateMovieVM data = new UpdateMovieVM
             {
-                Category = Categories,
-                Cinema = Cinemas,
+                Category = categories,
+                Cinema = cinemas,
                 Movie = movie,
             };
 
@@ -96,14 +111,14 @@ namespace ETickets.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public IActionResult Update(Movie movie)
+        public async Task<IActionResult> Update(Movie movie)
         {
             if (!ModelState.IsValid)
             {
                 var data = new UpdateMovieVM
                 {
-                    Category = _context.Categories.ToList(),
-                    Cinema = _context.Cinemas.ToList(),
+                    Category = await _repositoryCategory.GetAsync(),
+                    Cinema = await _repositoryCinema.GetAsync(),
                     Movie = movie
                 };
                 return View(data);
@@ -112,7 +127,7 @@ namespace ETickets.Areas.Admin.Controllers
 
 
             // هات الفيلم القديم
-            var dbMovie = _context.Movies.FirstOrDefault(m => m.Id == movie.Id);
+            var dbMovie = await _repository.GetOneAsync(e => e.Id == movie.Id);
             if (dbMovie == null) return NotFound();
 
             // عدل الخصائص اللي جت من الـ form
@@ -128,20 +143,21 @@ namespace ETickets.Areas.Admin.Controllers
             dbMovie.CinemaId = movie.CinemaId;
             dbMovie.CategoryId = movie.CategoryId;
 
-            //_context.Movies.Update(movie);
-            _context.SaveChanges();
+
+            await _repositoryCinema.GetAsync();
 
             // بعد التحديث يفضل ترجع لصفحة Index أو Details للفيلم
             return RedirectToAction("Index");
         }
 
         //[HttpDelete]
-        public IActionResult Delete(int id) 
+        public async Task<IActionResult> Delete(int Id) 
         { 
-            var movie = _context.Movies.FirstOrDefault(x => x.Id == id);
+            var movie = await _repository.GetOneAsync(e => e.Id == Id);
             if (movie == null) return NotFound();
-            _context.Movies.Remove(movie);
-            _context.SaveChanges();
+
+            await _repository.DeleteAsync(movie);
+            await _repository.CommitAsync();
 
             return RedirectToAction("Index");
         }

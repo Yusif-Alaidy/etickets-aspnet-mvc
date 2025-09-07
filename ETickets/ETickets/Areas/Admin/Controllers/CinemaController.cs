@@ -1,22 +1,24 @@
 ﻿using ETickets.DataAccess;
 using ETickets.Models;
+using ETickets.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CinemaController : Controller
     {
-        private CineBookContext _context;
-        public CinemaController(CineBookContext context)
+        private Repository<Cinema> _repository;
+        public CinemaController(Repository<Cinema> repo)
         {
-            _context = context;
+            _repository = repo;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var Cinemas = _context.Cinemas;
+            var Cinemas = await _repository.GetAsync();
             if (Cinemas is null) return NotFound();
 
             return View(Cinemas.ToList());
@@ -28,7 +30,7 @@ namespace ETickets.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Cinema Cinema, IFormFile CinemaLogo)
+        public async Task<IActionResult> Create(Cinema Cinema, IFormFile CinemaLogo)
         {
 
             if (CinemaLogo is null) return BadRequest();
@@ -48,25 +50,26 @@ namespace ETickets.Areas.Admin.Controllers
                 Cinema.CinemaLogo = fileName;
             }
 
-            _context.Cinemas.Add(Cinema);
-            _context.SaveChanges();
+            
+            await _repository.AddAsync(Cinema);
+            await _repository.CommitAsync();
 
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         public IActionResult Update(int Id)
         {
-            var cinema = _context.Cinemas.FirstOrDefault(c => c.Id == Id);
+            var cinema = _repository.GetOneAsync(e => e.Id == Id);
             if (cinema is null) return NotFound();
 
             return View(cinema);
         }
 
         [HttpPost]
-        public IActionResult Update(Cinema cinema, IFormFile? CinemaLogo)
+        public async Task<IActionResult> Update(Cinema cinema, IFormFile? CinemaLogo)
         {
 
-            var productInDb = _context.Cinemas.AsNoTracking().FirstOrDefault(e => e.Id == cinema.Id);
+            var productInDb = await _repository.GetOneAsync(e => e.Id == cinema.Id); // add no Traking
 
             if (productInDb is null)
                 return NotFound();
@@ -99,18 +102,22 @@ namespace ETickets.Areas.Admin.Controllers
                 cinema.CinemaLogo = productInDb.CinemaLogo;
             }
 
-            _context.Cinemas.Update(cinema);
-            _context.SaveChanges();
+ 
+ 
+
+            await _repository.Update(cinema);
+            await _repository.CommitAsync();
 
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int Id)
         {
-            var cinema = _context.Cinemas.FirstOrDefault( e => e.Id == id);
+            var cinema = await _repository.GetOneAsync(e => e.Id == Id);
             if (cinema is null) return NoContent();
 
-            _context.Cinemas.Remove(cinema);
-            _context.SaveChanges();
+            await _repository.DeleteAsync(cinema);
+            await _repository.CommitAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

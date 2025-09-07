@@ -16,7 +16,7 @@ namespace ETickets.Repositories
         }
 
         // Read ---------------------------------------------------------------------------------
-        public async Task<List<T>> GetAsync(Expression<Func<T,bool>>? filter = null)
+        public async Task<List<T>> GetAsync(Expression<Func<T,bool>>? filter = null, Expression<Func<T, object>>[]? include = null, bool tracked = true)
         {
             var data = _db.AsQueryable();
 
@@ -24,34 +24,45 @@ namespace ETickets.Repositories
             {
                 data = data.Where(filter);
             }
+            if (include is not null) 
+            {
+                foreach (var item in include)
+                {
+                    data = data.Include(item);
+                }
+            }
+            if (!tracked)
+            {
+                data = data.AsNoTracking();
+            }
 
             return await data.ToListAsync();
         }
-        public async Task<T> GetOneAsync(Expression<Func<T,bool>> filter)
+        public async Task<T> GetOneAsync(Expression<Func<T, bool>>? filter = null, Expression<Func<T, object>>[]? include = null, bool tracked = true)
         {
 
-            return await _db.FirstOrDefaultAsync(filter);
+            return (await GetAsync(filter, include, tracked)).FirstOrDefault()!;
         }
         //----------------------------------------------------------------------------------------
 
         // Create --------------------------------------------------------------------------------
-        public async Task AddAsync(T T)                                         
+        public async Task AddAsync(T entity)                                         
         {
-            await _db.AddAsync(T);
+            await _db.AddAsync(entity);
         }
         //----------------------------------------------------------------------------------------
 
         // Update --------------------------------------------------------------------------------
-        public async Task Update(T T)
+        public async Task Update(T entity)
         {
-            _db.Update(T);
+            _db.Update(entity);
         }
         //----------------------------------------------------------------------------------------
 
         // Delete---------------------------------------------------------------------------------
-        public async Task DeleteAsync(T T)
+        public async Task DeleteAsync(T entity)
         {
-             _db.Remove(T);
+             _db.Remove(entity);
         }
         //----------------------------------------------------------------------------------------
 
