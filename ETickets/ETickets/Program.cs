@@ -14,7 +14,7 @@ namespace ETickets
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<CineBookContext>( options => options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase") ) );
-            builder.Services.AddScoped<Repository>();
+            builder.Services.AddScoped(typeof(Repository<>), typeof(Repository<>));
 
             var app = builder.Build();
 

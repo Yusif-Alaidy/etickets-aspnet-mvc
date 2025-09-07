@@ -44,6 +44,7 @@ namespace ETickets.Areas.Admin.Controllers
             await _repository.AddAsync(category);
             await _repository.CommitAsync();
 
+            TempData["Success-Notification"] = "Create Successfully";
             return RedirectToAction(nameof(Index));
         }
         // ------------------------------------------------------------------
@@ -69,6 +70,9 @@ namespace ETickets.Areas.Admin.Controllers
 
             await _repository.Update(category);
             await _repository.CommitAsync();
+
+            TempData["Success-Notification"] = "Update Successfully";
+
             return RedirectToAction(nameof(Index));
         }
         // --------------------------------------------------------------------
@@ -87,6 +91,7 @@ namespace ETickets.Areas.Admin.Controllers
             await _repository.DeleteAsync(category);
             await _repository.CommitAsync();
 
+            TempData["Success-Notification"] = "Delete Successfully";
             return RedirectToAction(nameof(Index));
         }
         // --------------------------------------------------------------------

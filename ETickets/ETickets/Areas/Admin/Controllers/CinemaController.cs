@@ -53,6 +53,7 @@ namespace ETickets.Areas.Admin.Controllers
             
             await _repository.AddAsync(Cinema);
             await _repository.CommitAsync();
+            TempData["Success-Notification"] = "Create Successfully";
 
             return RedirectToAction(nameof(Index));
         }
@@ -108,6 +109,7 @@ namespace ETickets.Areas.Admin.Controllers
             await _repository.Update(cinema);
             await _repository.CommitAsync();
 
+            TempData["Success-Notification"] = "Update Successfully";
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Delete(int Id)
@@ -117,6 +119,7 @@ namespace ETickets.Areas.Admin.Controllers
 
             await _repository.DeleteAsync(cinema);
             await _repository.CommitAsync();
+            TempData["Success-Notification"] = "Delete Successfully";
 
             return RedirectToAction(nameof(Index));
         }

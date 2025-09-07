@@ -79,10 +79,10 @@ namespace ETickets.Areas.Admin.Controllers
                 Cinemas = cinemas
             };
 
-       
-
             await _repository.GetAsync();
             await _repository.CommitAsync();
+
+            TempData["Success-Notification"] = "Create Successfully";
 
             return RedirectToAction(nameof(Index));
         }
@@ -105,6 +105,7 @@ namespace ETickets.Areas.Admin.Controllers
                 Cinema = cinemas,
                 Movie = movie,
             };
+
 
             return View(data);
         }
@@ -146,6 +147,8 @@ namespace ETickets.Areas.Admin.Controllers
 
             await _repositoryCinema.GetAsync();
 
+            TempData["Success-Notification"] = "Update Successfully";
+
             // بعد التحديث يفضل ترجع لصفحة Index أو Details للفيلم
             return RedirectToAction("Index");
         }
@@ -158,6 +161,8 @@ namespace ETickets.Areas.Admin.Controllers
 
             await _repository.DeleteAsync(movie);
             await _repository.CommitAsync();
+
+            TempData["Success-Notification"] = "Delete Successfully";
 
             return RedirectToAction("Index");
         }
