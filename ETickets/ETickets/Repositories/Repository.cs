@@ -5,51 +5,53 @@ using System.Linq.Expressions;
 
 namespace ETickets.Repositories
 {
-    public class Repository
+    public class Repository<T> where T : class
     {
         private CineBookContext _context;
+        private DbSet<T> _db;
         public Repository(CineBookContext context)
         {
             _context = context;
+            _db = _context.Set<T>();
         }
 
         // Read ---------------------------------------------------------------------------------
-        public async Task<List<Category>> GetAsync(Expression<Func<Category,bool>>? filter = null)
+        public async Task<List<T>> GetAsync(Expression<Func<T,bool>>? filter = null)
         {
-            var car = _context.Categories.AsQueryable();
+            var data = _db.AsQueryable();
 
             if (filter is not null) 
             {
-                car = car.Where(filter);
+                data = data.Where(filter);
             }
 
-            return await car.ToListAsync();
+            return await data.ToListAsync();
         }
-        public async Task<Category> GetOneAsync(Expression<Func<Category,bool>> filter)
+        public async Task<T> GetOneAsync(Expression<Func<T,bool>> filter)
         {
 
-            return await _context.Categories.FirstOrDefaultAsync(filter);
+            return await _db.FirstOrDefaultAsync(filter);
         }
         //----------------------------------------------------------------------------------------
 
         // Create --------------------------------------------------------------------------------
-        public async Task AddAsync(Category category)                                         
+        public async Task AddAsync(T T)                                         
         {
-            await _context.Categories.AddAsync(category);
+            await _db.AddAsync(T);
         }
         //----------------------------------------------------------------------------------------
 
         // Update --------------------------------------------------------------------------------
-        public async Task Update(Category category)
+        public async Task Update(T T)
         {
-            _context.Categories.Update(category);
+            _db.Update(T);
         }
         //----------------------------------------------------------------------------------------
 
         // Delete---------------------------------------------------------------------------------
-        public async Task DeleteAsync(Category category)
+        public async Task DeleteAsync(T T)
         {
-             _context.Categories.Remove(category);
+             _db.Remove(T);
         }
         //----------------------------------------------------------------------------------------
 
