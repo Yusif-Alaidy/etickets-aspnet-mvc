@@ -14,12 +14,16 @@
 
                 <div class="mb-3">
                     <label for="name" class="form-label">FirstName</label>
-                    <input class="form-control" id="FirstName" name="FirstName" placeholder="First Name">
+                    <input class="form-control" asp-for="FirstName" placeholder="First Name">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+
                 </div>
 
                 <div class="mb-3">
                     <label for="name" class="form-label">LastName</label>
-                    <input class="form-control" id="LastName" name="LastName" placeholder="Last Name">
+                    <input class="form-control" asp-for="LastName" placeholder="Last Name">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+
                 </div>
 
                 <div class="mb-3">

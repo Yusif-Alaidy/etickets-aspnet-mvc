@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ETickets.Models;
 
 public partial class Actor
 {
     public int Id { get; set; }
-
+    [Required]
+    [MinLength(3)]
+    [MaxLength(10)]
     public string FirstName { get; set; } = null!;
 
+    [Required]
+    [MinLength(3)]
+    [MaxLength(10)]
     public string LastName { get; set; } = null!;
 
     public string? Bio { get; set; }

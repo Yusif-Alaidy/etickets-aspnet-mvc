@@ -41,6 +41,7 @@ namespace ETickets.Areas.Admin.Controllers
             { 
                 Categories = categories,
                 Cinemas = cinemas
+                
             };
 
             return View(data);
@@ -49,6 +50,13 @@ namespace ETickets.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Movie movie, IFormFile ImgUrl)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(movie); // validation messages will show up
+            }
+
+
+
             if (ImgUrl is null)
                 return BadRequest();
 
@@ -114,6 +122,12 @@ namespace ETickets.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(Movie movie)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View(movie); // validation messages will show up
+            }
+
             if (!ModelState.IsValid)
             {
                 var data = new UpdateMovieVM

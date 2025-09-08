@@ -34,6 +34,11 @@ namespace ETickets.Areas.Admin.Controllers
         public async Task<IActionResult> Create(Actor Actor, IFormFile ProfilePicture)
         {
 
+            if (!ModelState.IsValid)
+            {
+                return View(Actor); // validation messages will show up
+            }
+
             if (ProfilePicture is null)
                 return BadRequest();
 
@@ -72,6 +77,11 @@ namespace ETickets.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(Actor Actor)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View(Actor); // validation messages will show up
+            }
 
             await _repository.Update(Actor);
             await _repository.CommitAsync();

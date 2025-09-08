@@ -30,28 +30,34 @@ namespace ETickets.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Cinema Cinema, IFormFile CinemaLogo)
+        public async Task<IActionResult> Create(Cinema cinema, IFormFile cinemaLogo)
         {
 
-            if (CinemaLogo is null) return BadRequest();
-            if (CinemaLogo.Length > 0)
+            if (!ModelState.IsValid)
+            {
+                return View(cinema); // validation messages will show up
+            }
+
+
+            if (cinemaLogo is null) return BadRequest();
+            if (cinemaLogo.Length > 0)
             {
                 // Save img in wwwroot
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(CinemaLogo.FileName);
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(cinemaLogo.FileName);
                 // djsl-kds232-91321d-sadas-dasd213213.png
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
 
                 using (var stream = System.IO.File.Create(filePath))
                 {
-                    CinemaLogo.CopyTo(stream);
+                    cinemaLogo.CopyTo(stream);
                 }
 
                 // Save img in DB
-                Cinema.CinemaLogo = fileName;
+                cinema.CinemaLogo = fileName;
             }
 
             
-            await _repository.AddAsync(Cinema);
+            await _repository.AddAsync(cinema);
             await _repository.CommitAsync();
             TempData["Success-Notification"] = "Create Successfully";
 
@@ -69,6 +75,11 @@ namespace ETickets.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(Cinema cinema, IFormFile? CinemaLogo)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(cinema); // validation messages will show up
+            }
+
 
             var productInDb = await _repository.GetOneAsync(e => e.Id == cinema.Id); // add no Traking
 

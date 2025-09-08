@@ -6,5 +6,6 @@ namespace ETickets.ViewModel
     {
         public List<Category> Categories { get; set; }
         public List<Cinema> Cinemas { get; set; }
+        public Movie Movie { get; set; }
     }
 }

@@ -38,8 +38,11 @@ namespace ETickets.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Category category)
         {
-            //_context.Categories.Add(category);
-            //_context.SaveChanges();
+
+            if (!ModelState.IsValid)
+            {
+                return View(category); // validation messages will show up
+            }
 
             await _repository.AddAsync(category);
             await _repository.CommitAsync();
@@ -65,8 +68,10 @@ namespace ETickets.Areas.Admin.Controllers
         public async Task<IActionResult> Update(Category category)
         {
 
-            //_context.Categories.Update(category);
-            //_context.SaveChanges();
+            if (!ModelState.IsValid)
+            {
+                return View(category); // validation messages will show up
+            }
 
             await _repository.Update(category);
             await _repository.CommitAsync();
