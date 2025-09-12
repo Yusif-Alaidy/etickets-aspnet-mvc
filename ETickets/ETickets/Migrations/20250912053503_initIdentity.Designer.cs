@@ -4,6 +4,7 @@ using ETickets.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETickets.Migrations
 {
     [DbContext(typeof(CineBookContext))]
-    partial class CineBookContextModelSnapshot : ModelSnapshot
+    [Migration("20250912053503_initIdentity")]
+    partial class initIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,7 @@ namespace ETickets.Migrations
                     b.HasKey("Id")
                         .HasName("PK__Actors__3214EC071FA49555");
 
-                    b.ToTable("Actors", (string)null);
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("ETickets.Models.ApplicationUser", b =>
@@ -168,7 +171,7 @@ namespace ETickets.Migrations
                     b.HasKey("Id")
                         .HasName("PK__Categori__3214EC07336104FE");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ETickets.Models.Cinema", b =>
@@ -198,7 +201,7 @@ namespace ETickets.Migrations
                     b.HasKey("Id")
                         .HasName("PK__Cinemas__3214EC0797A09E18");
 
-                    b.ToTable("Cinemas", (string)null);
+                    b.ToTable("Cinemas");
                 });
 
             modelBuilder.Entity("ETickets.Models.Movie", b =>
@@ -250,7 +253,7 @@ namespace ETickets.Migrations
 
                     b.HasIndex("CinemaId");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

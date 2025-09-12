@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using ETickets.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+using ETickets.ViewModel;
 namespace ETickets.DataAccess;
 
-public partial class CineBookContext : DbContext
+public partial class CineBookContext : IdentityDbContext<ApplicationUser>
 {
 
 
@@ -24,12 +25,13 @@ public partial class CineBookContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
- 
-    //modelBuilder.Entity<Movie>()
-    //        .Property(m => m.ImgUrl)
-    //        .HasDefaultValue("default.png");
+        base.OnModelCreating(modelBuilder);
 
-    modelBuilder.Entity<Actor>(entity =>
+        //modelBuilder.Entity<Movie>()
+        //        .Property(m => m.ImgUrl)
+        //        .HasDefaultValue("default.png");
+
+        modelBuilder.Entity<Actor>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Actors__3214EC071FA49555");
 
@@ -85,4 +87,6 @@ public partial class CineBookContext : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+public DbSet<ETickets.ViewModel.RegisterVM> RegisterVM { get; set; } = default!;
 }

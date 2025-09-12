@@ -1,11 +1,14 @@
 ﻿using ETickets.DataAccess;
 using ETickets.Models;
+using ETickets.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+
 
 namespace ETickets.Repositories
 {
-    public class Repository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private CineBookContext _context;
         private DbSet<T> _db;

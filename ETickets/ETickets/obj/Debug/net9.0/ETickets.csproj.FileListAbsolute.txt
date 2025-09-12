@@ -346,3 +346,8 @@ C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\obj\Debug
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\obj\Debug\net9.0\compressed\l9kfutl1ia-xtb6zq3fpe.gz
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\obj\Debug\net9.0\compressed\irlampupoz-5n328x2apl.gz
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\obj\Debug\net9.0\compressed\etjtvtoq5h-4njhpxm0z4.gz
+C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll

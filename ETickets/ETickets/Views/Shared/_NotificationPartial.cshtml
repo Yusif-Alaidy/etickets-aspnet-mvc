@@ -1,6 +1,7 @@
-﻿@if (@TempData["success-notification"] is not null)
+﻿@if (@TempData["Success-Notification"] is not null)
 {
 	<script>
-		toastr.success('@TempData["Success-Notification"]')
+						                
+		toastr.success('@TempData.Peek("Success-Notification")')
 	</script>
 }
