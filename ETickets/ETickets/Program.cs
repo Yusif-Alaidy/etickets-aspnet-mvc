@@ -2,7 +2,9 @@ using ETickets.DataAccess;
 using ETickets.Models;
 using ETickets.Repositories;
 using ETickets.Repositories.IRepositories;
+using ETickets.Utility;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETickets
@@ -16,18 +18,24 @@ namespace ETickets
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<CineBookContext>( options => options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase") ) );
-            builder.Services.AddScoped<IRepository<Movie>, Repository<Movie>>();
-            builder.Services.AddScoped<IRepository<Actor>, Repository<Actor>>();
-            builder.Services.AddScoped<IRepository<Cinema>, Repository<Cinema>>();
-            builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
-            //builder.Services.AddScoped(typeof(Repository<>), typeof(Repository<>));
-
+            builder.Services.AddDbContext<CineBookContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase")));
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>
             {
                 option.Password.RequiredLength = 8;
                 option.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<CineBookContext>();
+            }).AddEntityFrameworkStores<CineBookContext>().AddDefaultTokenProviders();
+
+            //builder.Services.AddScoped<IRepository<Movie>, Repository<Movie>>();
+            //builder.Services.AddScoped<IRepository<Actor>, Repository<Actor>>();
+            //builder.Services.AddScoped<IRepository<Cinema>, Repository<Cinema>>();
+            //builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
+            //builder.Services.AddScoped(typeof(Repository<>), typeof(Repository<>));
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+
+
 
             var app = builder.Build();
 
