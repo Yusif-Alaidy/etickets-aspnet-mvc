@@ -1,12 +1,3 @@
-using ETickets.DataAccess;
-using ETickets.Models;
-using ETickets.Repositories;
-using ETickets.Repositories.IRepositories;
-using ETickets.Utility;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.EntityFrameworkCore;
-
 namespace ETickets
 {
     public class Program
@@ -36,6 +27,11 @@ namespace ETickets
             // Register custom services
             builder.Services.AddTransient<IEmailSender, EmailSender>();             // Email sending service
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // Generic repository pattern
+
+            //builder.Services.AddTransient<IEmailSender, EmailSender>();
+            //builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
+            //builder.Services.AddScoped<IRepository<Actor>, Repository<Actor>>();
+            //builder.Services.AddScoped<IRepository<Movie>, Repository<Movie>>();
 
             #endregion
 

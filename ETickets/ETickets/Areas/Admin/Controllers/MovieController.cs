@@ -1,12 +1,4 @@
-﻿using ETickets.DataAccess;
-using ETickets.Models;
-using ETickets.Repositories;
-using ETickets.ViewModel;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-
-namespace ETickets.Areas.Admin.Controllers
+﻿namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class MovieController : Controller

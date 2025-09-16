@@ -1,9 +1,4 @@
-﻿using ETickets.DataAccess;
-using ETickets.ViewModel;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
-namespace ETickets.Areas.Customer.Controllers
+﻿namespace ETickets.Areas.Customer.Controllers
 {
     [Area("Customer")]
     public class HomeController : Controller

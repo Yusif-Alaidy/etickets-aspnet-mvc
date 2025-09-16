@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-
-namespace ETickets.Repositories.IRepositories
+﻿namespace ETickets.Repositories.IRepositories
 {
     public interface IRepository<T> where T : class
     {

@@ -1,12 +1,4 @@
-﻿using ETickets.Models;
-using ETickets.ViewModel;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Threading.Tasks;
-
-namespace ETickets.Areas.Identity.Controllers
+﻿namespace ETickets.Areas.Identity.Controllers
 {
     [Area("Identity")]
     public class AccountController : Controller

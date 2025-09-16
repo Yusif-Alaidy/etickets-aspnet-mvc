@@ -1,10 +1,4 @@
-﻿using ETickets.DataAccess;
-using ETickets.Models;
-using Microsoft.AspNetCore.Mvc;
-using ETickets.Repositories;
-using System.Threading.Tasks;
-
-namespace ETickets.Areas.Admin.Controllers
+﻿namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class CategoryController : Controller

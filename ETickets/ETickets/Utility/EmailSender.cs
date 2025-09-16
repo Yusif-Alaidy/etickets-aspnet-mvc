@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using System.Net;
-using System.Net.Mail;
-
-namespace ETickets.Utility
+﻿namespace ETickets.Utility
 {
 
     /// <summary>

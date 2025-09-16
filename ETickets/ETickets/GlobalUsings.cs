@@ -1,0 +1,19 @@
+﻿global using ETickets.DataAccess;
+global using ETickets.Models;
+global using ETickets.Repositories;
+global using ETickets.Repositories.IRepositories;
+global using ETickets.Utility;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.UI.Services;
+global using Microsoft.EntityFrameworkCore;
+global using System;
+global using System.Collections.Generic;
+global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using ETickets.ViewModel;
+global using Microsoft.AspNetCore.Mvc;
+global using System.Net;
+global using System.Threading.Tasks;
+global using System.Linq.Expressions;
+global using System.Net.Mail;
+
