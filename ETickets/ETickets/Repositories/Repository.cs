@@ -10,15 +10,26 @@ namespace ETickets.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
+
+        #region Fields
+
         private CineBookContext _context;
         private DbSet<T> _db;
+
+        #endregion
+
+        #region Constructor
+
         public Repository(CineBookContext context)
         {
             _context = context;
             _db = _context.Set<T>();
         }
 
-        // Read ---------------------------------------------------------------------------------
+        #endregion
+
+        #region ReadAll
+
         public async Task<List<T>> GetAsync(Expression<Func<T,bool>>? filter = null, Expression<Func<T, object>>[]? include = null, bool tracked = true)
         {
             var data = _db.AsQueryable();
@@ -41,39 +52,51 @@ namespace ETickets.Repositories
 
             return await data.ToListAsync();
         }
+
+        #endregion
+
+        #region ReadOne
         public async Task<T> GetOneAsync(Expression<Func<T, bool>>? filter = null, Expression<Func<T, object>>[]? include = null, bool tracked = true)
         {
 
             return (await GetAsync(filter, include, tracked)).FirstOrDefault()!;
         }
-        //----------------------------------------------------------------------------------------
+        #endregion
 
-        // Create --------------------------------------------------------------------------------
+        #region Create
+
         public async Task AddAsync(T entity)                                         
         {
             await _db.AddAsync(entity);
         }
-        //----------------------------------------------------------------------------------------
+    
+        #endregion
 
-        // Update --------------------------------------------------------------------------------
+        #region Update
+
         public async Task Update(T entity)
         {
             _db.Update(entity);
         }
-        //----------------------------------------------------------------------------------------
 
-        // Delete---------------------------------------------------------------------------------
+        #endregion
+
+        #region Delete
+
         public async Task DeleteAsync(T entity)
         {
              _db.Remove(entity);
         }
-        //----------------------------------------------------------------------------------------
+        
+        #endregion
 
-        // Save ----------------------------------------------------------------------------------
-        public async Task CommitAsync()
+        #region Save
+
+         public async Task CommitAsync()
         {
             await _context.SaveChangesAsync();
         }
-        //----------------------------------------------------------------------------------------
+
+         #endregion
     }
 }

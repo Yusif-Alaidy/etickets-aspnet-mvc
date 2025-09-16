@@ -9,26 +9,28 @@ namespace ETickets.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
+        #region Fields
+        private readonly Repository<Category> _repository;
+        #endregion
 
-        private Repository<Category> _repository;
+        #region Constructor
         public CategoryController(Repository<Category> repository)
         {
             _repository = repository;
         }
+        #endregion
 
-        // Home -------------------------------------------------------------
+        #region Index
         public async Task<IActionResult> Index()
         {
-            //var categorys = _context.Categories;
+            var categories = await _repository.GetAsync();
+            if (categories is null) return NotFound();
 
-            var categorys = await _repository.GetAsync();
-            if (categorys is null) return NotFound();
-
-            return View(categorys.ToList());
+            return View(categories.ToList());
         }
-        // ------------------------------------------------------------------
+        #endregion
 
-        // Create -----------------------------------------------------------
+        #region Create
         [HttpGet]
         public IActionResult Create()
         {
@@ -38,10 +40,9 @@ namespace ETickets.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Category category)
         {
-
             if (!ModelState.IsValid)
             {
-                return View(category); // validation messages will show up
+                return View(category);
             }
 
             await _repository.AddAsync(category);
@@ -50,15 +51,13 @@ namespace ETickets.Areas.Admin.Controllers
             TempData["Success-Notification"] = "Create Successfully";
             return RedirectToAction(nameof(Index));
         }
-        // ------------------------------------------------------------------
+        #endregion
 
-        // Update -----------------------------------------------------------
+        #region Update
         [HttpGet]
-        public async Task<IActionResult> Update(int Id)
+        public async Task<IActionResult> Update(int id)
         {
-            //var category = _context.Categories.FirstOrDefault(c => c.Id == Id);
-
-            var category = await _repository.GetOneAsync(e => e.Id == Id);
+            var category = await _repository.GetOneAsync(e => e.Id == id);
             if (category is null) return NotFound();
 
             return View(category);
@@ -67,31 +66,24 @@ namespace ETickets.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(Category category)
         {
-
             if (!ModelState.IsValid)
             {
-                return View(category); // validation messages will show up
+                return View(category);
             }
 
             await _repository.Update(category);
             await _repository.CommitAsync();
 
             TempData["Success-Notification"] = "Update Successfully";
-
             return RedirectToAction(nameof(Index));
         }
-        // --------------------------------------------------------------------
+        #endregion
 
-        // Delete -------------------------------------------------------------
-        public async Task<IActionResult> Delete(int Id)
+        #region Delete
+        public async Task<IActionResult> Delete(int id)
         {
-            //var category = _context.Categories.FirstOrDefault(e => e.Id == id);
-
-            var category = await _repository.GetOneAsync(e => e.Id == Id);
+            var category = await _repository.GetOneAsync(e => e.Id == id);
             if (category is null) return NoContent();
-
-            //_context.Categories.Remove(category);
-            //_context.SaveChanges();
 
             await _repository.DeleteAsync(category);
             await _repository.CommitAsync();
@@ -99,6 +91,6 @@ namespace ETickets.Areas.Admin.Controllers
             TempData["Success-Notification"] = "Delete Successfully";
             return RedirectToAction(nameof(Index));
         }
-        // --------------------------------------------------------------------
+        #endregion
     }
 }

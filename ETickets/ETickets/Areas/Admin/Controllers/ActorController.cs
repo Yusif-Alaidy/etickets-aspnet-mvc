@@ -10,96 +10,106 @@ namespace ETickets.Areas.Admin.Controllers
     [Area("Admin")]
     public class ActorController : Controller
     {
+        #region Fields
+        private readonly Repository<Actor> _repository;
+        #endregion
 
-        private Repository<Actor> _repository;
+        #region Constructor
         public ActorController(Repository<Actor> repo)
         {
             _repository = repo;
         }
+        #endregion
 
+        #region Index
         public async Task<IActionResult> Index()
         {
-            var Actors = await _repository.GetAsync();
-            if (Actors is null) return NotFound();
+            var actors = await _repository.GetAsync();
+            if (actors is null) return NotFound();
 
-            return View(Actors);
+            return View(actors);
         }
+        #endregion
 
+        #region Create
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Create(Actor Actor, IFormFile ProfilePicture)
-        {
 
+        [HttpPost]
+        public async Task<IActionResult> Create(Actor actor, IFormFile profilePicture)
+        {
             if (!ModelState.IsValid)
             {
-                return View(Actor); // validation messages will show up
+                return View(actor);
             }
 
-            if (ProfilePicture is null)
+            if (profilePicture is null)
                 return BadRequest();
 
-            if (ProfilePicture.Length > 0)
+            if (profilePicture.Length > 0)
             {
-                // Save img in wwwroot
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ProfilePicture.FileName);
-                // djsl-kds232-91321d-sadas-dasd213213.png
+                // Save file to wwwroot
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(profilePicture.FileName);
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
 
                 using (var stream = System.IO.File.Create(filePath))
                 {
-                    ProfilePicture.CopyToAsync(stream);
+                    await profilePicture.CopyToAsync(stream);
                 }
 
-                // Save img in DB
-                Actor.ProfilePicture = fileName;
+                // Save file path in DB
+                actor.ProfilePicture = fileName;
             }
 
-            
-            await _repository.AddAsync(Actor);
+            await _repository.AddAsync(actor);
             await _repository.CommitAsync();
             TempData["Success-Notification"] = "Create Successfully";
 
-
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region Update
         [HttpGet]
-        public async Task<IActionResult> Update(int Id)
+        public async Task<IActionResult> Update(int id)
         {
-            var Actor = await _repository.GetOneAsync(c => c.Id == Id);
-            if (Actor is null) return NotFound();
+            var actor = await _repository.GetOneAsync(c => c.Id == id);
+            if (actor is null) return NotFound();
 
-            return View(Actor);
+            return View(actor);
         }
-        [HttpPost]
-        public async Task<IActionResult> Update(Actor Actor)
-        {
 
+        [HttpPost]
+        public async Task<IActionResult> Update(Actor actor)
+        {
             if (!ModelState.IsValid)
             {
-                return View(Actor); // validation messages will show up
+                return View(actor);
             }
 
-            await _repository.Update(Actor);
+            await _repository.Update(actor);
             await _repository.CommitAsync();
             TempData["Success-Notification"] = "Update Successfully";
 
             return RedirectToAction(nameof(Index));
         }
-        public async Task<IActionResult> Delete(int Id)
+        #endregion
+
+        #region Delete
+        public async Task<IActionResult> Delete(int id)
         {
+            var actor = await _repository.GetOneAsync(e => e.Id == id);
+            if (actor is null) return NoContent();
 
-            var Actor = await _repository.GetOneAsync(e => e.Id == Id);
-            if (Actor is null) return NoContent();
-
-            await _repository.DeleteAsync(Actor);
+            await _repository.DeleteAsync(actor);
             await _repository.CommitAsync();
 
-            TempData["Success-Notification"] = "Create Successfully";
+            TempData["Success-Notification"] = "Delete Successfully";
             return RedirectToAction(nameof(Index));
         }
+        #endregion
     }
 }

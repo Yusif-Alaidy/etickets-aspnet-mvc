@@ -15,49 +15,60 @@ namespace ETickets
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            #region Add services to the container
+
+            // Enable MVC controllers and views
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<CineBookContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase")));
+            // Configure database context with SQL Server
+            builder.Services.AddDbContext<CineBookContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("UserDatabase")));
+
+            // Configure Identity for authentication and authorization
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>
             {
-                option.Password.RequiredLength = 8;
-                option.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<CineBookContext>().AddDefaultTokenProviders();
+                option.Password.RequiredLength = 8;      // Minimum password length
+                option.User.RequireUniqueEmail = true;   // Require unique email per user
+            })
+            .AddEntityFrameworkStores<CineBookContext>()
+            .AddDefaultTokenProviders();
 
-            //builder.Services.AddScoped<IRepository<Movie>, Repository<Movie>>();
-            //builder.Services.AddScoped<IRepository<Actor>, Repository<Actor>>();
-            //builder.Services.AddScoped<IRepository<Cinema>, Repository<Cinema>>();
-            //builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
-            //builder.Services.AddScoped(typeof(Repository<>), typeof(Repository<>));
+            // Register custom services
+            builder.Services.AddTransient<IEmailSender, EmailSender>();             // Email sending service
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // Generic repository pattern
 
-            builder.Services.AddTransient<IEmailSender, EmailSender>();
-            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
-
-
+            #endregion
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            #region Configure middleware pipeline
+
+            // Error handling and HSTS for production
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
+            // Enforce HTTPS
             app.UseHttpsRedirection();
+
+            // Routing
             app.UseRouting();
 
+            // Authorization
             app.UseAuthorization();
 
+            // Map static files and default route
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
 
+            #endregion
+
+            // Run the application
             app.Run();
         }
     }

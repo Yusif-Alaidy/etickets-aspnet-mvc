@@ -5,25 +5,30 @@ namespace ETickets.Repositories.IRepositories
 {
     public interface IRepository<T> where T : class
     {
-        // Read ---------------------------------------------------------------------------------
+
+        #region ReadAll
         Task<List<T>> GetAsync(Expression<Func<T, bool>>? filter = null, Expression<Func<T, object>>[]? include = null, bool tracked = true);
+        #endregion
+
+        #region ReadOne
         Task<T> GetOneAsync(Expression<Func<T, bool>>? filter = null, Expression<Func<T, object>>[]? include = null, bool tracked = true);
-        //----------------------------------------------------------------------------------------
+        #endregion
 
-        // Create --------------------------------------------------------------------------------
+        #region Create
         Task AddAsync(T entity);
-        //----------------------------------------------------------------------------------------
+        #endregion
 
-        // Update --------------------------------------------------------------------------------
+        #region Update
         Task Update(T entity);
-        //----------------------------------------------------------------------------------------
+        #endregion
 
-        // Delete---------------------------------------------------------------------------------
+        #region Delete
         Task DeleteAsync(T entity);
-        //----------------------------------------------------------------------------------------
+        #endregion
 
-        // Save ----------------------------------------------------------------------------------
+        #region Save
         Task CommitAsync();
-        //----------------------------------------------------------------------------------------
+        #endregion
+
     }
 }

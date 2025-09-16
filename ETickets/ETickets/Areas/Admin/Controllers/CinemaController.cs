@@ -10,12 +10,19 @@ namespace ETickets.Areas.Admin.Controllers
     [Area("Admin")]
     public class CinemaController : Controller
     {
-        private Repository<Cinema> _repository;
+        #region Fields & Constructor
+        // Repository to handle data operations for Cinema entity
+        private readonly Repository<Cinema> _repository;
+
+        // Inject repository through constructor
         public CinemaController(Repository<Cinema> repo)
         {
             _repository = repo;
         }
+        #endregion
 
+        #region Index
+        // Display list of all cinemas
         public async Task<IActionResult> Index()
         {
             var Cinemas = await _repository.GetAsync();
@@ -23,28 +30,28 @@ namespace ETickets.Areas.Admin.Controllers
 
             return View(Cinemas.ToList());
         }
+        #endregion
 
+        #region Create
+        // Render create form
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
+        // Handle creation of new cinema with logo upload
         [HttpPost]
         public async Task<IActionResult> Create(Cinema cinema, IFormFile cinemaLogo)
         {
-
             if (!ModelState.IsValid)
-            {
-                return View(cinema); // validation messages will show up
-            }
-
+                return View(cinema);
 
             if (cinemaLogo is null) return BadRequest();
+
             if (cinemaLogo.Length > 0)
             {
-                // Save img in wwwroot
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(cinemaLogo.FileName);
-                // djsl-kds232-91321d-sadas-dasd213213.png
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
 
                 using (var stream = System.IO.File.Create(filePath))
@@ -52,17 +59,19 @@ namespace ETickets.Areas.Admin.Controllers
                     cinemaLogo.CopyTo(stream);
                 }
 
-                // Save img in DB
                 cinema.CinemaLogo = fileName;
             }
 
-            
             await _repository.AddAsync(cinema);
             await _repository.CommitAsync();
             TempData["Success-Notification"] = "Create Successfully";
 
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region Update
+        // Render update form
         [HttpGet]
         public IActionResult Update(int Id)
         {
@@ -72,25 +81,19 @@ namespace ETickets.Areas.Admin.Controllers
             return View(cinema);
         }
 
+        // Handle update of cinema details and logo replacement
         [HttpPost]
         public async Task<IActionResult> Update(Cinema cinema, IFormFile? CinemaLogo)
         {
             if (!ModelState.IsValid)
-            {
-                return View(cinema); // validation messages will show up
-            }
+                return View(cinema);
 
-
-            var productInDb = await _repository.GetOneAsync(e => e.Id == cinema.Id); // add no Traking
-
-            if (productInDb is null)
-                return NotFound();
+            var productInDb = await _repository.GetOneAsync(e => e.Id == cinema.Id);
+            if (productInDb is null) return NotFound();
 
             if (CinemaLogo is not null)
             {
-                // Save img in wwwroot
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(CinemaLogo.FileName);
-                // djsl-kds232-91321d-sadas-dasd213213.png
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", fileName);
 
                 using (var stream = System.IO.File.Create(filePath))
@@ -98,7 +101,6 @@ namespace ETickets.Areas.Admin.Controllers
                     CinemaLogo.CopyTo(stream);
                 }
 
-                // Remove old Img from wwwroot
                 var oldFileName = productInDb.CinemaLogo;
                 var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", oldFileName);
                 if (System.IO.File.Exists(oldFilePath))
@@ -106,7 +108,6 @@ namespace ETickets.Areas.Admin.Controllers
                     System.IO.File.Delete(oldFilePath);
                 }
 
-                // Save img in DB
                 cinema.CinemaLogo = fileName;
             }
             else
@@ -114,15 +115,16 @@ namespace ETickets.Areas.Admin.Controllers
                 cinema.CinemaLogo = productInDb.CinemaLogo;
             }
 
- 
- 
-
             await _repository.Update(cinema);
             await _repository.CommitAsync();
 
             TempData["Success-Notification"] = "Update Successfully";
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region Delete
+        // Handle cinema deletion
         public async Task<IActionResult> Delete(int Id)
         {
             var cinema = await _repository.GetOneAsync(e => e.Id == Id);
@@ -134,6 +136,6 @@ namespace ETickets.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        #endregion
     }
 }

@@ -11,60 +11,64 @@ namespace ETickets.Areas.Admin.Controllers
     [Area("Admin")]
     public class MovieController : Controller
     {
-        //private readonly CineBookContext _context;
+        #region Fields & Constructor
+        // Repository for Movie entity
+        private readonly Repository<Movie> _repository;
 
-        private Repository<Movie> _repository;
-        private Repository<Category> _repositoryCategory;
-        private Repository<Cinema> _repositoryCinema;
+        // Repository for Category entity
+        private readonly Repository<Category> _repositoryCategory;
 
+        // Repository for Cinema entity
+        private readonly Repository<Cinema> _repositoryCinema;
+
+        // Inject repositories through constructor
         public MovieController(Repository<Movie> repository, Repository<Category> repositoryCategory, Repository<Cinema> repositoryCinema)
         {
             _repository = repository;
             _repositoryCategory = repositoryCategory;
             _repositoryCinema = repositoryCinema;
         }
+        #endregion
 
+        #region Index
+        // Display list of movies including related Category and Cinema
         public async Task<IActionResult> Index()
         {
-            var movies = await _repository.GetAsync(include: [e=> e.Category!, e=> e.Cinema!]);
+            var movies = await _repository.GetAsync(include: [e => e.Category!, e => e.Cinema!]);
             return View(movies);
         }
+        #endregion
 
+        #region Create
+        // Render create form with categories and cinemas
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            
             var categories = await _repositoryCategory.GetAsync();
             var cinemas = await _repositoryCinema.GetAsync();
-            if (categories is null || cinemas is null) return NoContent(); 
-            var data = new CreateMovieVM 
-            { 
+            if (categories is null || cinemas is null) return NoContent();
+
+            var data = new CreateMovieVM
+            {
                 Categories = categories,
                 Cinemas = cinemas
-                
             };
 
             return View(data);
         }
 
+        // Handle creation of new movie with image upload
         [HttpPost]
         public async Task<IActionResult> Create(Movie movie, IFormFile ImgUrl)
         {
             if (!ModelState.IsValid)
-            {
-                return View(movie); // validation messages will show up
-            }
+                return View(movie);
 
-
-
-            if (ImgUrl is null)
-                return BadRequest();
+            if (ImgUrl is null) return BadRequest();
 
             if (ImgUrl.Length > 0)
             {
-                // Save img in wwwroot
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
-                // djsl-kds232-91321d-sadas-dasd213213.png
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
 
                 using (var stream = System.IO.File.Create(filePath))
@@ -72,62 +76,52 @@ namespace ETickets.Areas.Admin.Controllers
                     ImgUrl.CopyTo(stream);
                 }
 
-                // Save img in DB
                 movie.ImgUrl = fileName;
             }
 
-
             var categories = await _repositoryCategory.GetAsync();
             var cinemas = await _repositoryCinema.GetAsync();
-
             if (categories is null || cinemas is null) return NoContent();
+
             var data = new CreateMovieVM
             {
                 Categories = categories,
                 Cinemas = cinemas
             };
 
-            await _repository.GetAsync();
+            await _repository.AddAsync(movie);
             await _repository.CommitAsync();
 
             TempData["Success-Notification"] = "Create Successfully";
-
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region Update
+        // Render update form with current movie, categories, and cinemas
         [HttpGet]
         public async Task<IActionResult> Update(int Id)
         {
             var movie = await _repository.GetOneAsync(e => e.Id == Id);
-
-            
             var categories = await _repositoryCategory.GetAsync();
             var cinemas = await _repositoryCinema.GetAsync();
 
-            if (movie == null) 
-                return NoContent();
+            if (movie == null) return NoContent();
 
-            UpdateMovieVM data = new UpdateMovieVM
+            var data = new UpdateMovieVM
             {
                 Category = categories,
                 Cinema = cinemas,
                 Movie = movie,
             };
 
-
             return View(data);
         }
 
-
+        // Handle movie update
         [HttpPost]
         public async Task<IActionResult> Update(Movie movie)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return View(movie); // validation messages will show up
-            }
-
             if (!ModelState.IsValid)
             {
                 var data = new UpdateMovieVM
@@ -139,18 +133,13 @@ namespace ETickets.Areas.Admin.Controllers
                 return View(data);
             }
 
-
-
-            // هات الفيلم القديم
             var dbMovie = await _repository.GetOneAsync(e => e.Id == movie.Id);
             if (dbMovie == null) return NotFound();
 
-            // عدل الخصائص اللي جت من الـ form
             dbMovie.Name = movie.Name;
             dbMovie.Description = movie.Description;
             dbMovie.Price = movie.Price;
-            if (movie.ImgUrl is not null) dbMovie.ImgUrl = movie.ImgUrl;
-            else dbMovie.ImgUrl = "default.png";
+            dbMovie.ImgUrl = movie.ImgUrl ?? "default.png";
             dbMovie.TrailerUrl = movie.TrailerUrl;
             dbMovie.StartDate = movie.StartDate;
             dbMovie.EndDate = movie.EndDate;
@@ -158,18 +147,18 @@ namespace ETickets.Areas.Admin.Controllers
             dbMovie.CinemaId = movie.CinemaId;
             dbMovie.CategoryId = movie.CategoryId;
 
-
-            await _repositoryCinema.GetAsync();
+            await _repository.Update(dbMovie);
+            await _repository.CommitAsync();
 
             TempData["Success-Notification"] = "Update Successfully";
-
-            // بعد التحديث يفضل ترجع لصفحة Index أو Details للفيلم
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
+        #endregion
 
-        //[HttpDelete]
-        public async Task<IActionResult> Delete(int Id) 
-        { 
+        #region Delete
+        // Handle movie deletion
+        public async Task<IActionResult> Delete(int Id)
+        {
             var movie = await _repository.GetOneAsync(e => e.Id == Id);
             if (movie == null) return NotFound();
 
@@ -177,9 +166,8 @@ namespace ETickets.Areas.Admin.Controllers
             await _repository.CommitAsync();
 
             TempData["Success-Notification"] = "Delete Successfully";
-
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
-
+        #endregion
     }
 }

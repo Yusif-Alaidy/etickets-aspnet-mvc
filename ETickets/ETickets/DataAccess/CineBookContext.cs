@@ -4,33 +4,42 @@ using ETickets.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ETickets.ViewModel;
+
 namespace ETickets.DataAccess;
 
 public partial class CineBookContext : IdentityDbContext<ApplicationUser>
 {
+    #region Constructor
 
-
+    // Inject DbContext options into the base class
     public CineBookContext(DbContextOptions<CineBookContext> options)
         : base(options)
     {
     }
 
+    #endregion
+
+    #region DbSets
+
+    // Entities (Tables)
     public virtual DbSet<Actor> Actors { get; set; }
-
     public virtual DbSet<Category> Categories { get; set; }
-
     public virtual DbSet<Cinema> Cinemas { get; set; }
-
     public virtual DbSet<Movie> Movies { get; set; }
+
+    // ViewModels mapped for DbSet usage (if needed)
+    public DbSet<RegisterVM> RegisterVM { get; set; } = default!;
+
+    #endregion
+
+    #region Model Configuration
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Call Identity base configuration
         base.OnModelCreating(modelBuilder);
 
-        //modelBuilder.Entity<Movie>()
-        //        .Property(m => m.ImgUrl)
-        //        .HasDefaultValue("default.png");
-
+        // Configure Actor entity
         modelBuilder.Entity<Actor>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Actors__3214EC071FA49555");
@@ -39,6 +48,7 @@ public partial class CineBookContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.LastName).HasMaxLength(100);
             entity.Property(e => e.ProfilePicture).HasMaxLength(255);
 
+            // Many-to-Many relation between Actor and Movie
             entity.HasMany(d => d.Movies).WithMany(p => p.Actors)
                 .UsingEntity<Dictionary<string, object>>(
                     "ActorMovie",
@@ -55,13 +65,14 @@ public partial class CineBookContext : IdentityDbContext<ApplicationUser>
                     });
         });
 
+        // Configure Category entity
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Categori__3214EC07336104FE");
-
             entity.Property(e => e.Name).HasMaxLength(100);
         });
 
+        // Configure Cinema entity
         modelBuilder.Entity<Cinema>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Cinemas__3214EC0797A09E18");
@@ -71,6 +82,7 @@ public partial class CineBookContext : IdentityDbContext<ApplicationUser>
             entity.Property(e => e.Name).HasMaxLength(100);
         });
 
+        // Configure Movie entity
         modelBuilder.Entity<Movie>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Movies__3214EC079CCC2664");
@@ -86,7 +98,7 @@ public partial class CineBookContext : IdentityDbContext<ApplicationUser>
         OnModelCreatingPartial(modelBuilder);
     }
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    #endregion
 
-public DbSet<ETickets.ViewModel.RegisterVM> RegisterVM { get; set; } = default!;
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

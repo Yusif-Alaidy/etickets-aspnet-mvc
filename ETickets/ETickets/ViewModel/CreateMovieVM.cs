@@ -4,8 +4,8 @@ namespace ETickets.ViewModel
 {
     public class CreateMovieVM
     {
-        public List<Category> Categories { get; set; }
-        public List<Cinema> Cinemas { get; set; }
-        public Movie Movie { get; set; }
+        public List<Category> Categories    { get; set; }
+        public List<Cinema> Cinemas         { get; set; }
+        public Movie Movie                  { get; set; }
     }
 }
