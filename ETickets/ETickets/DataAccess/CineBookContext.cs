@@ -18,8 +18,7 @@
         public virtual DbSet<Cinema> Cinemas { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
 
-        // Optional ViewModel mapping (if really needed in DbContext)
-        public DbSet<RegisterVM> RegisterVM { get; set; } = default!;
+ 
 
         #endregion
 

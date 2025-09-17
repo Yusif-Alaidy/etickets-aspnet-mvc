@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ETickets.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace ETickets.Areas.Identity.Controllers
@@ -176,6 +177,49 @@ namespace ETickets.Areas.Identity.Controllers
             await signInManager.SignOutAsync();
             TempData["success-notification"] = "Logout Successfully";
             return RedirectToAction("Login", "Account", new { area = "Identity" });
+        }
+
+        #endregion
+
+        #region ResendEmailConfirmation
+
+        [HttpGet]
+        public IActionResult ResendEmailConfirmation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResendEmailConfirmation(ResendEmailConfirmationVM resendEmailConfirmationVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(resendEmailConfirmationVM);
+            }
+            var user = await _userManager.FindByNameAsync(resendEmailConfirmationVM.EmailORUserName) ?? await _userManager.FindByEmailAsync(resendEmailConfirmationVM.EmailORUserName);
+
+            if (user is null)
+            {
+                TempData["error-notification"] = "Invalid User Name/Email Or Password";
+                return View(resendEmailConfirmationVM);
+            }
+
+            // Send Email confirmation
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+
+
+
+
+            //var link = Url.Action(nameof(ConfirmEmail), "Account", new { area = "Identity", userId = user.Id, token = token }, Request.Scheme);
+            var link = Url.Action(nameof(ConfirmEmail), "Account",
+                new { area = "Identity", userId = user.Id, token = token },
+                Request.Scheme);
+            await emailSender.SendEmailAsync(user.Email!, "Confirm Your Account!", $"<h1>Confirm Your Account By Clicking <a href='{link}'>here</a></h1>");
+
+            TempData["success-notification"] = "Send Email successfully, Please Confirm Your Account";
+            return RedirectToAction("Login");
+
+           
         }
 
         #endregion

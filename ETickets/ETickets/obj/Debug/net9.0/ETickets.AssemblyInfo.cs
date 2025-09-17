@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ETickets")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4d4b32915c4ec8488d2bc0607aed9d7b13dd15f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b3cb1f10ac8e6409f779476fa988349c16c6a1a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ETickets")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ETickets")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

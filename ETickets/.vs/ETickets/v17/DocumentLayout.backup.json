@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|solutionrelative:etickets\\areas\\identity\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|c:\\users\\yusif_j0ovw0c\\downloads\\etickets-aspnet-mvc\\etickets\\etickets\\areas\\identity\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|solutionrelative:etickets\\areas\\identity\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|c:\\users\\yusif_j0ovw0c\\downloads\\etickets-aspnet-mvc\\etickets\\etickets\\dataaccess\\cinebookcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|solutionrelative:etickets\\dataaccess\\cinebookcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|c:\\users\\yusif_j0ovw0c\\downloads\\etickets-aspnet-mvc\\etickets\\etickets\\areas\\customer\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|solutionrelative:etickets\\areas\\customer\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|c:\\users\\yusif_j0ovw0c\\downloads\\etickets-aspnet-mvc\\etickets\\etickets\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|solutionrelative:etickets\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|c:\\users\\yusif_j0ovw0c\\downloads\\etickets-aspnet-mvc\\etickets\\etickets\\areas\\admin\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +29,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|c:\\users\\yusif_j0ovw0c\\downloads\\etickets-aspnet-mvc\\etickets\\etickets\\areas\\admin\\controllers\\actorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|solutionrelative:etickets\\areas\\admin\\controllers\\actorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|c:\\users\\yusif_j0ovw0c\\downloads\\etickets-aspnet-mvc\\etickets\\etickets\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{28B9D366-48D2-4CA6-9AD0-33DA0DB0EC96}|ETickets\\ETickets.csproj|solutionrelative:etickets\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,24 +38,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 288,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Login.cshtml",
-              "DocumentMoniker": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\Areas\\Identity\\Views\\Account\\Login.cshtml",
-              "RelativeDocumentMoniker": "ETickets\\Areas\\Identity\\Views\\Account\\Login.cshtml",
-              "ToolTip": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\Areas\\Identity\\Views\\Account\\Login.cshtml",
-              "RelativeToolTip": "ETickets\\Areas\\Identity\\Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAEAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-09-17T20:09:48.474Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -69,46 +52,49 @@
               "RelativeDocumentMoniker": "ETickets\\Areas\\Identity\\Controllers\\AccountController.cs",
               "ToolTip": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\Areas\\Identity\\Controllers\\AccountController.cs",
               "RelativeToolTip": "ETickets\\Areas\\Identity\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAQwK8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALkAAAAAAAAAAAAYwNAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-17T14:09:04.004Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "CineBookContext.cs",
               "DocumentMoniker": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\DataAccess\\CineBookContext.cs",
               "RelativeDocumentMoniker": "ETickets\\DataAccess\\CineBookContext.cs",
               "ToolTip": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\DataAccess\\CineBookContext.cs",
               "RelativeToolTip": "ETickets\\DataAccess\\CineBookContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T06:39:55.708Z"
+              "WhenOpened": "2025-09-17T06:39:55.708Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "Repository.cs",
               "DocumentMoniker": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\Repositories\\Repository.cs",
               "RelativeDocumentMoniker": "ETickets\\Repositories\\Repository.cs",
               "ToolTip": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\Repositories\\Repository.cs",
               "RelativeToolTip": "ETickets\\Repositories\\Repository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAcwC0AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T14:50:51.132Z"
+              "WhenOpened": "2025-09-16T14:50:51.132Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\Areas\\Customer\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "ETickets\\Areas\\Customer\\Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\yusif_j0ovw0c\\Downloads\\etickets-aspnet-mvc\\ETickets\\ETickets\\Areas\\Customer\\Controllers\\HomeController.cs",
               "RelativeToolTip": "ETickets\\Areas\\Customer\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-16T14:43:17.368Z"
+              "WhenOpened": "2025-09-16T14:43:17.368Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
