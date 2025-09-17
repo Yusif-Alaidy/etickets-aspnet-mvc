@@ -164,16 +164,21 @@ namespace ETickets.Areas.Identity.Controllers
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
 
+
+
+        #endregion // Authentication actions (Login & Logout)
+
+        #region Logout
+
         public async Task<IActionResult> Logout()
         {
             // Sign out the current user and clear authentication cookies
             await signInManager.SignOutAsync();
             TempData["success-notification"] = "Logout Successfully";
-            return RedirectToAction("Index", "Home", new { area = "Customer" });
+            return RedirectToAction("Login", "Account", new { area = "Identity" });
         }
 
-        #endregion // Authentication actions (Login & Logout)
-
+        #endregion
 
     }
 }
