@@ -4,11 +4,11 @@
     public class ActorController : Controller
     {
         #region Fields
-        private readonly Repository<Actor> _repository;
+        private readonly IRepository<Actor> _repository;
         #endregion
 
         #region Constructor
-        public ActorController(Repository<Actor> repo)
+        public ActorController(IRepository<Actor> repo)
         {
             _repository = repo;
         }

@@ -5,10 +5,10 @@
     {
         #region Fields & Constructor
         // Repository to handle data operations for Cinema entity
-        private readonly Repository<Cinema> _repository;
+        private readonly IRepository<Cinema> _repository;
 
         // Inject repository through constructor
-        public CinemaController(Repository<Cinema> repo)
+        public CinemaController(IRepository<Cinema> repo)
         {
             _repository = repo;
         }

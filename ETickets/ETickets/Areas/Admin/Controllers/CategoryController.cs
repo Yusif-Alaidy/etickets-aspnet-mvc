@@ -4,11 +4,11 @@
     public class CategoryController : Controller
     {
         #region Fields
-        private readonly Repository<Category> _repository;
+        private readonly IRepository<Category> _repository;
         #endregion
 
         #region Constructor
-        public CategoryController(Repository<Category> repository)
+        public CategoryController(IRepository<Category> repository)
         {
             _repository = repository;
         }

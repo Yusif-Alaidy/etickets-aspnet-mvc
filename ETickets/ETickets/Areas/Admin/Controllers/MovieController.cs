@@ -5,16 +5,16 @@
     {
         #region Fields & Constructor
         // Repository for Movie entity
-        private readonly Repository<Movie> _repository;
+        private readonly IRepository<Movie> _repository;
 
         // Repository for Category entity
-        private readonly Repository<Category> _repositoryCategory;
+        private readonly IRepository<Category> _repositoryCategory;
 
         // Repository for Cinema entity
-        private readonly Repository<Cinema> _repositoryCinema;
+        private readonly IRepository<Cinema> _repositoryCinema;
 
         // Inject repositories through constructor
-        public MovieController(Repository<Movie> repository, Repository<Category> repositoryCategory, Repository<Cinema> repositoryCinema)
+        public MovieController(IRepository<Movie> repository, IRepository<Category> repositoryCategory, IRepository<Cinema> repositoryCinema)
         {
             _repository = repository;
             _repositoryCategory = repositoryCategory;
