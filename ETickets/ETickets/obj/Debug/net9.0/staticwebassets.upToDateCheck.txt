@@ -18,6 +18,7 @@ wwwroot\img\674cea25-ce20-4c19-a2d8-fd1cb677a6bf.jpg
 wwwroot\img\755e4c80-587b-4c84-966f-f0b98b05a532.png
 wwwroot\img\76287652-df37-47df-8fdb-d1d4baa166b8.webp
 wwwroot\img\856ff1e9-4461-4e12-a3d2-4eabaae8ff4b.webp
+wwwroot\img\88883a4f-6145-4bfe-a728-e4da8dae09d3.jpg
 wwwroot\img\9fdd1f35-8e9b-47ec-9817-07f83a696fd1.png
 wwwroot\img\actor1.jpg
 wwwroot\img\avenger.jpg

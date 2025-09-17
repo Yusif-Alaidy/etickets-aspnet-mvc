@@ -1,18 +1,26 @@
-﻿namespace ETickets.Areas.Identity.Controllers
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+
+namespace ETickets.Areas.Identity.Controllers
 {
     [Area("Identity")]
     public class AccountController : Controller
     {
-        #region Fields & Constructor
+        #region Fields 
 
         private readonly IEmailSender emailSender;
+        private readonly SignInManager<ApplicationUser> signInManager;
         public UserManager<ApplicationUser> _userManager { get; }
 
+        #endregion
+
+        #region Constructor
         // Inject UserManager and EmailSender
-        public AccountController(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public AccountController(UserManager<ApplicationUser> userManager, IEmailSender emailSender, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             this.emailSender = emailSender;
+            this.signInManager = signInManager;
         }
 
         #endregion
@@ -100,5 +108,72 @@
         }
 
         #endregion
+
+        #region Login
+        [HttpGet]
+        public IActionResult Login()
+        {
+            // Check if user is already authenticated, if yes redirect to Home
+            if (User.Identity is not null && User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home", new { area = "Customer" });
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginVM loginVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(loginVM);
+            }
+
+            // Try to find user by username or email
+            var user = await _userManager.FindByNameAsync(loginVM.EmailORUserName) ?? await _userManager.FindByEmailAsync(loginVM.EmailORUserName);
+
+            if (user is null)
+            {
+                TempData["error-notification"] = "Invalid User Name/Email Or Password";
+                return View(loginVM);
+            }
+
+            var result = await _userManager.CheckPasswordAsync(user, loginVM.Password);
+
+            if (!result)
+            {
+                TempData["error-notification"] = "Invalid User Name/Email Or Password";
+                return View(loginVM);
+            }
+
+            if (!user.EmailConfirmed)
+            {
+                TempData["error-notification"] = "Confirm Your Account!";
+                return View(loginVM);
+            }
+
+            if (!user.LockoutEnabled)
+            {
+                TempData["error-notification"] = $"You have a block till {user.LockoutEnd}";
+                return View(loginVM);
+            }
+
+            await signInManager.SignInAsync(user, loginVM.RememberMe);
+            TempData["success-notification"] = "Login Successfully";
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            // Sign out the current user and clear authentication cookies
+            await signInManager.SignOutAsync();
+            TempData["success-notification"] = "Logout Successfully";
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
+        }
+
+        #endregion // Authentication actions (Login & Logout)
+
+
     }
 }
