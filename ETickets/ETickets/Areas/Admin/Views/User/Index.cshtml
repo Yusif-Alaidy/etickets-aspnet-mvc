@@ -1,0 +1,89 @@
+﻿@model List<ApplicationUser>
+
+@section Scripts
+{
+<partial name="_NotificationPartial">
+    }
+
+<div class="container">
+    <div class="row mb-3 align-items-center my-3">
+        <div class="col-md-6">
+            <h2 class="display-6">All Users</h2>
+        </div>
+        <div class="col-md-6 text-md-end text-start mt-2 mt-md-0">
+            <a href="/admin/user/create" class="btn btn-success">Create</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Email Confirmed</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td>@item.UserName</td>
+                                <td>@item.Email</td>
+                            @if (item.EmailConfirmed)
+                            {
+                                    <td><span class="badge text-bg-primary">@item.EmailConfirmed</span></td>
+                            }
+                            else
+                            {
+                                    <td><span class="badge text-bg-danger">@item.EmailConfirmed</span></td>
+                            }
+                                <td>
+                                    <a href="/Admin/User/Edit/@item.Id" type="button" class="btn btn-warning">Edit</a>
+                                @if (item.LockoutEnabled)
+                                {
+                                        <a href="javascript:void(0);" data-url="/Admin/User/LockUnLock/@item.Id" class="btn btn-danger btn-delete">Lock</a>
+                                }
+                                else
+                                {
+                                        <a href="javascript:void(0);" data-url="/Admin/User/LockUnLock/@item.Id" class="btn btn-primary btn-delete">Un Lock</a>
+                                }
+                                </td>
+                            </tr>
+                    }
+                    </tbody>
+                </table>
+
+        </div>
+    </div>
+</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".btn-delete").forEach(function (btn) {
+                btn.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const deleteUrl = this.getAttribute("data-url");
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = deleteUrl;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
