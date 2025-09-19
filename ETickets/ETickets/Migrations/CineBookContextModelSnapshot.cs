@@ -65,10 +65,9 @@ namespace ETickets.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("Id")
-                        .HasName("PK__Actors__3214EC071FA49555");
+                    b.HasKey("Id");
 
-                    b.ToTable("Actors", (string)null);
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("ETickets.Models.ApplicationUser", b =>
@@ -165,10 +164,9 @@ namespace ETickets.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id")
-                        .HasName("PK__Categori__3214EC07336104FE");
+                    b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ETickets.Models.Cinema", b =>
@@ -195,10 +193,9 @@ namespace ETickets.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id")
-                        .HasName("PK__Cinemas__3214EC0797A09E18");
+                    b.HasKey("Id");
 
-                    b.ToTable("Cinemas", (string)null);
+                    b.ToTable("Cinemas");
                 });
 
             modelBuilder.Entity("ETickets.Models.Movie", b =>
@@ -243,14 +240,42 @@ namespace ETickets.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.HasKey("Id")
-                        .HasName("PK__Movies__3214EC079CCC2664");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CinemaId");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("ETickets.Models.UserOTP", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OTPNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ValidTo")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("UserOTPs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -420,6 +445,17 @@ namespace ETickets.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Cinema");
+                });
+
+            modelBuilder.Entity("ETickets.Models.UserOTP", b =>
+                {
+                    b.HasOne("ETickets.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

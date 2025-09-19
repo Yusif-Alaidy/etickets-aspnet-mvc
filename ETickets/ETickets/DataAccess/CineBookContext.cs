@@ -17,6 +17,7 @@
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Cinema> Cinemas { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<UserOTP> UserOTPs { get; set; }
 
  
 

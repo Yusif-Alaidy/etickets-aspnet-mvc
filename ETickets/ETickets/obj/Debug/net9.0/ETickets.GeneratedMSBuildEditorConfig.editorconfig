@@ -104,8 +104,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ3VzdG9tZXJcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/yusif_j0ovw0c/Downloads/etickets-aspnet-mvc/ETickets/ETickets/Areas/Identity/Views/Account/ForgetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxGb3JnZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/yusif_j0ovw0c/Downloads/etickets-aspnet-mvc/ETickets/ETickets/Areas/Identity/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yusif_j0ovw0c/Downloads/etickets-aspnet-mvc/ETickets/ETickets/Areas/Identity/Views/Account/NewPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxOZXdQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/yusif_j0ovw0c/Downloads/etickets-aspnet-mvc/ETickets/ETickets/Areas/Identity/Views/Account/Register.cshtml]

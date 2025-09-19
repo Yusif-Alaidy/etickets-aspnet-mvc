@@ -1,4 +1,5 @@
 ﻿using ETickets.Models;
+using ETickets.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
@@ -12,16 +13,18 @@ namespace ETickets.Areas.Identity.Controllers
         private readonly IEmailSender emailSender;
         private readonly SignInManager<ApplicationUser> signInManager;
         public UserManager<ApplicationUser> _userManager { get; }
+        private readonly IRepository<UserOTP> _userOTP;
 
         #endregion
 
         #region Constructor
         // Inject UserManager and EmailSender
-        public AccountController(UserManager<ApplicationUser> userManager, IEmailSender emailSender, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, IEmailSender emailSender, SignInManager<ApplicationUser> signInManager, IRepository<UserOTP> userOTP)
         {
             _userManager = userManager;
             this.emailSender = emailSender;
             this.signInManager = signInManager;
+            this._userOTP = userOTP;
         }
 
         #endregion
@@ -205,7 +208,7 @@ namespace ETickets.Areas.Identity.Controllers
             }
 
             // Send Email confirmation
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
 
 
@@ -224,5 +227,140 @@ namespace ETickets.Areas.Identity.Controllers
 
         #endregion
 
+        #region Forget Password
+
+        [HttpGet]
+        public IActionResult ForgetPassword()
+      {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgetPassword(ForgetPasswordVM forgetPasswordVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(forgetPasswordVM);
+            }
+
+            var user = await _userManager.FindByNameAsync(forgetPasswordVM.EmailORUserName) ?? await _userManager.FindByEmailAsync(forgetPasswordVM.EmailORUserName);
+
+            if (user is null)
+            {
+                TempData["error-notification"] = "Invalid User Name/Email Or Password";
+                return View(forgetPasswordVM);
+            }
+
+            // Send Email confirmation
+            //var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var OTPNumber = new Random().Next(1000, 9999);
+
+            await emailSender.SendEmailAsync(user.Email!, "Reset Your Account!", $"Use this OTP Number: <b>{OTPNumber}</b> to reset your account. Don't share it.");
+
+            await _userOTP.AddAsync(new UserOTP()
+            {
+                ApplicationUserId = user.Id,
+                OTPNumber = OTPNumber.ToString(),
+                ValidTo = DateTime.UtcNow.AddDays(1)
+            });
+            await _userOTP.CommitAsync();
+
+            TempData["success-notification"] = "Send OTP to your Email successfully, Please check Your Email";
+            return RedirectToAction("NewPassword", "Account", new { area = "Identity", userId = user.Id });
+        }
+
+        //[HttpGet]
+        //public IActionResult ConfirmOTP(string userId)
+        //{
+        //    return View(new ConfirmOTPVM()
+        //    {
+        //        ApplicationUserId = userId
+        //    });
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> ConfirmOTP(ConfirmOTPVM confirmOTPVM)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(confirmOTPVM);
+        //    }
+
+        //    var user = await _userManager.FindByIdAsync(confirmOTPVM.ApplicationUserId);
+
+        //    if (user is null)
+        //        return NotFound();
+
+        //    var lstOTP = (await _userOTP.GetAsync(e => e.ApplicationUserId == confirmOTPVM.ApplicationUserId)).OrderBy(e => e.Id).LastOrDefault();
+
+        //    if (lstOTP is null)
+        //        return NotFound();
+
+        //    if (lstOTP.OTPNumber == confirmOTPVM.OTPNumber && lstOTP.ValidTo > DateTime.UtcNow)
+        //    {
+        //        return RedirectToAction("NewPassword", "Account", new { area = "Identity", userId = user.Id });
+        //    }
+
+        //    TempData["error-notification"] = "Invalid OTP Number";
+
+        //    //return View(confirmOTPVM);
+        //    return RedirectToAction("ConfirmOTP", "Account", new { area = "Identity", userId = confirmOTPVM.ApplicationUserId });
+        //}
+
+        [HttpGet]
+        public IActionResult NewPassword(string userId)
+        {
+            return View(new NewPasswordVM()
+            {
+                ApplicationUserId = userId
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewPassword(NewPasswordVM newPasswordVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(newPasswordVM);
+            }
+
+            var user = await _userManager.FindByIdAsync(newPasswordVM.ApplicationUserId);
+
+            if (user is null)
+                return NotFound();
+
+            var lstOTP = (await _userOTP.GetAsync(e => e.ApplicationUserId == newPasswordVM.ApplicationUserId)).OrderBy(e => e.Id).LastOrDefault();
+            if (lstOTP is null)
+                return NotFound();
+
+            if (lstOTP.OTPNumber == newPasswordVM.OTPNumber && lstOTP.ValidTo > DateTime.UtcNow)
+            {
+
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var result = await _userManager.ResetPasswordAsync(user, token, newPasswordVM.Password);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, item.Description);
+                    }
+
+                    return View(newPasswordVM);
+                }
+                return RedirectToAction("Login", "Account", new { area = "Identity", userId = user.Id });
+            }
+
+
+
+
+
+
+            TempData["success-notification"] = "Update Password successfully.";
+            return RedirectToAction("Login");
+
+        }
+
+
+        #endregion
     }
 }
