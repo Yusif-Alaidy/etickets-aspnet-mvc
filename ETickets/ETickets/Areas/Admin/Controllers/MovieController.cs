@@ -1,4 +1,8 @@
-﻿namespace ETickets.Areas.Admin.Controllers
+﻿using ETickets.Areas.Admin.ModelView;
+using ETickets.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class MovieController : Controller
@@ -36,50 +40,23 @@
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var categories = await _repositoryCategory.GetAsync();
-            var cinemas = await _repositoryCinema.GetAsync();
-            if (categories is null || cinemas is null) return NoContent();
-
-            var data = new CreateMovieVM
+            var vm = new CreateMovieVM
             {
-                Categories = categories,
-                Cinemas = cinemas
+                Categories = await GetCategoriesSelectListAsync(),
+                Cinemas = await GetCinemasSelectListAsync()
             };
 
-            return View(data);
+            return View(vm);
         }
 
         // Handle creation of new movie with image upload
         [HttpPost]
         public async Task<IActionResult> Create(Movie movie, IFormFile ImgUrl)
         {
-            if (!ModelState.IsValid)
-                return View(movie);
-
-            if (ImgUrl is null) return BadRequest();
-
-            if (ImgUrl.Length > 0)
+            if (ImgUrl is not null && ImgUrl.Length > 0)
             {
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImgUrl.FileName);
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    ImgUrl.CopyTo(stream);
-                }
-
-                movie.ImgUrl = fileName;
+                movie.ImgUrl = await SaveImageAsync(ImgUrl);
             }
-
-            var categories = await _repositoryCategory.GetAsync();
-            var cinemas = await _repositoryCinema.GetAsync();
-            if (categories is null || cinemas is null) return NoContent();
-
-            var data = new CreateMovieVM
-            {
-                Categories = categories,
-                Cinemas = cinemas
-            };
 
             await _repository.AddAsync(movie);
             await _repository.CommitAsync();
@@ -87,6 +64,43 @@
             TempData["Success-Notification"] = "Create Successfully";
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region Helpers
+
+        private async Task<List<SelectListItem>> GetCategoriesSelectListAsync()
+        {
+            return (await _repositoryCategory.GetAsync())
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList();
+        }
+
+        private async Task<List<SelectListItem>> GetCinemasSelectListAsync()
+        {
+            return (await _repositoryCinema.GetAsync())
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                }).ToList();
+        }
+
+        private async Task<string> SaveImageAsync(IFormFile file)
+        {
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return fileName;
+        }
+
         #endregion
 
         #region Update

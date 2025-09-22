@@ -1,3 +1,5 @@
+using ETickets.Utility.DBInitializer;
+
 namespace ETickets
 {
     public class Program
@@ -23,6 +25,7 @@ namespace ETickets
             })
             .AddEntityFrameworkStores<CineBookContext>()
             .AddDefaultTokenProviders();
+            builder.Services.AddScoped<IDBInitializer, DBInitializer>();
 
             // Register custom services
             builder.Services.AddTransient<IEmailSender, EmailSender>();             // Email sending service
@@ -53,7 +56,15 @@ namespace ETickets
             app.UseRouting();
 
             // Authorization
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
+                // use dbInitializer
+                dbInitializer.Initialize();
+            }
 
             // Map static files and default route
             app.MapStaticAssets();

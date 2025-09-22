@@ -1,12 +1,12 @@
-﻿﻿@if (@TempData["success-notification"] is not null)
+﻿@if (TempData["success-notification"] != null)
 {
     <script>
-        toastr.success('@TempData["success-notification"]')
+        toastr.success('@TempData["success-notification"]');
     </script>
 }
-else if (TempData["error-notification"] is not null)
+@if (TempData["error-notification"] != null)
 {
     <script>
-        toastr.error('@TempData["error-notification"]')
+        toastr.error('@TempData["error-notification"]');
     </script>
 }

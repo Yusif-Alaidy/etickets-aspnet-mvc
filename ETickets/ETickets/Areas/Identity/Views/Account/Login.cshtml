@@ -1,9 +1,7 @@
-﻿@using ETickets.ViewModel
-@model LoginVM
+﻿@model ETickets.ViewModel.LoginVM
 @{
     ViewData["Title"] = "Login";
 }
-
 <div class="container">
     <h1>Login</h1>
 
@@ -12,7 +10,9 @@
     <div class="row">
         <div class="col-md-12">
             <form asp-action="Login">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div> 
+                    <p asp-validation-summary="All" class="text-danger"></p>
+                </div>
                 <div class="form-group">
                     <label asp-for="EmailORUserName" class="control-label"></label>
                     <input asp-for="EmailORUserName" class="form-control" />
@@ -48,8 +48,10 @@
         <a asp-action="ForgetPassword">Forget Password</a>
     </div>
 </div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <partial name="_NotificationPartial">
 }
+

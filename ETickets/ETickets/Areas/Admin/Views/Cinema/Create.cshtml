@@ -23,6 +23,8 @@
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave a description here" style="height: 100px" name="Description"></textarea>
                         <label for="description">You Description Here...</label>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="mb-3">
@@ -30,11 +32,15 @@
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave an Address  here" style="height: 100px" name="Address"></textarea>
                         <label for="Address">You Address Here...</label>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="Img" class="form-label">Img</label>
                     <input type="file" class="form-control" asp-for="CinemaLogo" placeholder="Poster" accept="image/*" onchange="previewImage(event)">
+                    <span asp-validation-for="CinemaLogo" class="text-danger"></span>
+
                 </div>
                 <div class="mb-3">
                     <img id="preview" src="#" alt="Image Preview" style="max-width: 200px; display:none; border:1px solid #ccc; padding:5px; border-radius:10px;" />

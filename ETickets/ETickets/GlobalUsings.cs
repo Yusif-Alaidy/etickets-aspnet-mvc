@@ -16,3 +16,4 @@ global using System.Net;
 global using System.Threading.Tasks;
 global using System.Linq.Expressions;
 global using System.Net.Mail;
+global using ETickets.Areas.Admin.ModelView;

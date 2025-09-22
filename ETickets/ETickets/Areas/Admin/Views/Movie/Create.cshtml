@@ -1,4 +1,4 @@
-﻿@using ETickets.ViewModel
+﻿﻿@using ETickets.ViewModel
 @model CreateMovieVM
 
 <div class="container">
@@ -51,43 +51,45 @@
 
                 <div class="mb-3">
                     <label for="EndDate" class="form-label">End date</label>
-                    <input type="date" class="form-control" asp-for="Movie.EndDate" placeholder="end Date">
-                    <span asp-validation-for="Movie.EndDate" class="text-danger"></span>
+                    <input type="date" class="form-control" asp-for="@Model.Movie.EndDate" placeholder="end Date">
+                    <span asp-validation-for="@Model.Movie.EndDate" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label for="MovieStatus" class="form-label">Status</label>
                     <select class="form-select" name="MovieStatus">
-                        <option value="" >Movie Status</option>
-                        <option value="0" >Not Active</option>
+                        <option value="">Movie Status</option>
+                        <option value="0">Not Active</option>
                         <option value="1">Active</option>
                         <option value="2">Comming soon</option>
-                    </select>      
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="CinemaId" class="form-label">Cinema Name</label>
                     @* <input type="number" class="form-control" id="CategoryId" name="CategoryId"> *@
-                    <select name="CinemaId" class="form-select">           
-                            <option value="">the List</option>
+                    @* <select name="CinemaId" class="form-select">
+                        <option value="">the List</option>
                         @foreach (var cinema in Model.Cinemas)
                         {
-                            <option value="@cinema.Id">@cinema.Name</option>
+                            <option value="@cinema.Id">@cinema.Id</option>
                         }
-                        
-                    </select>
+
+                    </select> *@
+                    <select class="form-select" asp-for="@Model.Movie.CinemaId" asp-items="@Model.Cinemas"></select>
                 </div>
                 <div class="mb-3">
                     <label for="CategoryId" class="form-label">Category Name</label>
-                    <select name="CategoryId" class="form-select">
-                             <option value="">Category</option>  
+                    @* <select name="CategoryId" class="form-select">
+                        <option value="">Category</option>
                         @foreach (var cat in Model.Categories)
                         {
-                            <option value="@cat.Id">@cat.Name</option>
+                            <option value="@cat.Id">@cat.Id</option>
                         }
-                    </select>
+                    </select> *@
+                    <select class="form-select" asp-for="@Model.Movie.CategoryId" asp-items="@Model.Categories"></select>
 
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

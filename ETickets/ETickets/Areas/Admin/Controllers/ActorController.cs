@@ -59,7 +59,7 @@
 
             await _repository.AddAsync(actor);
             await _repository.CommitAsync();
-            TempData["Success-Notification"] = "Create Successfully";
+            TempData["success-notification"] = "Create Successfully";
 
             return RedirectToAction(nameof(Index));
         }
@@ -85,7 +85,7 @@
 
             await _repository.Update(actor);
             await _repository.CommitAsync();
-            TempData["Success-Notification"] = "Update Successfully";
+            TempData["success-notification"] = "Update Successfully";
 
             return RedirectToAction(nameof(Index));
         }
@@ -100,7 +100,7 @@
             await _repository.DeleteAsync(actor);
             await _repository.CommitAsync();
 
-            TempData["Success-Notification"] = "Delete Successfully";
+            TempData["success-notification"] = "Delete Successfully";
             return RedirectToAction(nameof(Index));
         }
         #endregion

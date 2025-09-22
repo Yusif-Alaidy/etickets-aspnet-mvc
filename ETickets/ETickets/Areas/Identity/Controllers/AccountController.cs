@@ -82,7 +82,7 @@ namespace ETickets.Areas.Identity.Controllers
                 $"<h1>Confirm your account by clicking <a href='{link}'>here</a></h1>");
 
             // Success message
-            TempData["Success-Notification"] = "User created successfully, please confirm your account";
+            TempData["success-notification"] = "User created successfully, please confirm your account";
 
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
@@ -101,11 +101,11 @@ namespace ETickets.Areas.Identity.Controllers
 
             if (!result.Succeeded)
             {
-                TempData["Error-Notification"] = "Invalid token, please resend confirmation email";
+                TempData["error-notification"] = "Invalid token, please resend confirmation email";
             }
             else
             {
-                TempData["Success-Notification"] = "Account activated successfully";
+                TempData["success-notification"] = "Account activated successfully";
             }
 
             return RedirectToAction("Index", "Home", new { area = "Customer" });

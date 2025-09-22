@@ -23,10 +23,13 @@
         public DateTime EndDate { get; set; }
 
         public int MovieStatus { get; set; }
-
+        [Required]
         public int CinemaId { get; set; }
+        [Required]
         public Cinema? Cinema { get; set; }
+        [Required]
         public int CategoryId { get; set; }
+        [Required]
         public Category? Category { get; set; }
         public List<Actor>? Actors { get; set; }
 
