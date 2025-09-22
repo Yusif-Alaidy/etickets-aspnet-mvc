@@ -60,6 +60,10 @@
                                 <a class="nav-link" asp-area="Admin" asp-controller="Actor" asp-action="Index">Actor</a>
                                 <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
                                 <a class="nav-link" asp-area="Admin" asp-controller="Cinema" asp-action="Index">Cinema</a>
+                                @if (User.IsInRole($"{SD.SuperAdminRole}"))
+                                {
+                                <a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="Index">User</a>
+                                }
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

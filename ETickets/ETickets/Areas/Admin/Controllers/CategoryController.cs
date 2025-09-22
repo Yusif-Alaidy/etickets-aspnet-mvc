@@ -1,6 +1,10 @@
-﻿namespace ETickets.Areas.Admin.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.AdminRole}, {SD.SuperAdminRole}")]
+
     public class CategoryController : Controller
     {
         #region Fields

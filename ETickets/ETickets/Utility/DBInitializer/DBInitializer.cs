@@ -1,5 +1,4 @@
-﻿using ETickets.Utility;
-using ETickets.Utility.DBInitializer;
+﻿using ETickets.Utility.DBInitializer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;

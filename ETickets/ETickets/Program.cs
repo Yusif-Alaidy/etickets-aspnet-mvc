@@ -31,10 +31,11 @@ namespace ETickets
             builder.Services.AddTransient<IEmailSender, EmailSender>();             // Email sending service
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>)); // Generic repository pattern
 
-            //builder.Services.AddTransient<IEmailSender, EmailSender>();
-            //builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
-            //builder.Services.AddScoped<IRepository<Actor>, Repository<Actor>>();
-            //builder.Services.AddScoped<IRepository<Movie>, Repository<Movie>>();
+            builder.Services.ConfigureApplicationCookie(option =>
+            {
+                option.LoginPath = "/Identity/Account/Login";
+                option.AccessDeniedPath = "/";
+            });
 
             #endregion
 

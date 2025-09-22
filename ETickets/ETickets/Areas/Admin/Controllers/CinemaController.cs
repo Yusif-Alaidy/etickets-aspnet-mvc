@@ -1,6 +1,7 @@
 ﻿namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.AdminRole}, {SD.SuperAdminRole}")]
     public class CinemaController : Controller
     {
         #region Fields & Constructor

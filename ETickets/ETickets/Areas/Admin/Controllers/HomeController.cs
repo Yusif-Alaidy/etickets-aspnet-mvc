@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = $"SuperAdmin, Admin")]
+    [Authorize(Roles = $"{SD.AdminRole}, {SD.SuperAdminRole}")]
+
     public class HomeController : Controller
     {
         public IActionResult Index()

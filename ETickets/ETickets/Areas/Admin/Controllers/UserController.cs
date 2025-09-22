@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    //[Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = $"{SD.SuperAdminRole}")]
     public class UserController : Controller
     {
         #region Fields

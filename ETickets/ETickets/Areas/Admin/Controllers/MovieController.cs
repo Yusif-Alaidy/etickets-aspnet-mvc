@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace ETickets.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = $"{SD.AdminRole}, {SD.SuperAdminRole}")]
     public class MovieController : Controller
     {
         #region Fields & Constructor
