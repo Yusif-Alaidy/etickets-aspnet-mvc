@@ -18,6 +18,7 @@
         public virtual DbSet<Cinema> Cinemas { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<UserOTP> UserOTPs { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
 
  
 
