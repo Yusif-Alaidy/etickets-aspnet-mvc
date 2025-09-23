@@ -45,9 +45,10 @@ namespace ETickets.Utility.DBInitializer
                     UserName        = "Admin",
                     Email           = "Admin@gmail.com",
                     EmailConfirmed  = true,
+                    
                 }, "Admin@123").GetAwaiter().GetResult();
-                var user = User.FindByNameAsync("SuperAdmin").GetAwaiter().GetResult(); 
-
+                var user = User.FindByNameAsync("SuperAdmin").GetAwaiter().GetResult();
+                user.EmailConfirmed = true;
                 if (user is not null)
                     User.AddToRoleAsync(user, SD.SuperAdminRole).GetAwaiter().GetResult();  
             }

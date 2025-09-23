@@ -139,7 +139,7 @@ namespace ETickets.Areas.Identity.Controllers
 
             if (user is null)
             {
-                TempData["error-notification"] = "Invalid User Name/Email Or Password";
+                TempData["error-notification"] = "Invalid User Name/Email";
                 return View(loginVM);
             }
 
@@ -147,7 +147,7 @@ namespace ETickets.Areas.Identity.Controllers
 
             if (!result)
             {
-                TempData["error-notification"] = "Invalid User Name/Email Or Password";
+                TempData["error-notification"] = "Invalid User Password";
                 return View(loginVM);
             }
 
