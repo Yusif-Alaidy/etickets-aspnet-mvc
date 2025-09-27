@@ -662,3 +662,4 @@ C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\obj\Debug
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\obj\Debug\net9.0\ref\ETickets.dll
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Mapster.dll
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Mapster.Core.dll
+C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\bin\Debug\net9.0\Stripe.net.dll

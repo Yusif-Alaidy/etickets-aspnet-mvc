@@ -1,3 +1,4 @@
+using Stripe;
 using ETickets.Utility.DBInitializer;
 
 namespace ETickets
@@ -36,6 +37,8 @@ namespace ETickets
                 option.LoginPath = "/Identity/Account/Login";
                 option.AccessDeniedPath = "/";
             });
+            //builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
             #endregion
 

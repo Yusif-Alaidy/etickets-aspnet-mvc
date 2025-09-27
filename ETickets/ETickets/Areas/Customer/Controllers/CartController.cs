@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Stripe.Checkout;
 using System.Threading.Tasks;
 
 namespace ETickets.Areas.Customer.Controllers
@@ -14,13 +15,15 @@ namespace ETickets.Areas.Customer.Controllers
         #region Fields
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRepository<Cart> repositoryCart;
+        private readonly IRepository<Order> repositoryOrder;
         #endregion
 
         #region Constructore
-        public CartController(UserManager<ApplicationUser> userManager, IRepository<Cart> repositoryCart)
+        public CartController(UserManager<ApplicationUser> userManager, IRepository<Cart> repositoryCart, IRepository<Order> repositoryOrder)
         {
             this.userManager = userManager;
             this.repositoryCart = repositoryCart;
+            this.repositoryOrder = repositoryOrder;
         }
         #endregion
 
@@ -138,6 +141,65 @@ namespace ETickets.Areas.Customer.Controllers
             return RedirectToAction("Index");
         }
         #endregion
+
+        public async Task<IActionResult> Pay()
+        {
+            var user = await userManager.GetUserAsync(User);
+
+            if (user is null)
+                return NotFound();
+
+            var carts = await repositoryCart.GetAsync(e => e.ApplicationUserId == user.Id, include: [e => e.Movie!]);
+
+            if (user is not null && carts is not null)
+            {
+                // Create Order <-- Cart
+                var order = new Order()
+                {
+                    ApplicationUser = user,
+                    OrderDate = DateTime.UtcNow,
+                    OrderStatus = OrderStatus.Completed,
+                    TotalPrice = carts.Sum(e => e.Movie.Price * e.Count)
+                };
+                // Create options for strip
+                var options = new SessionCreateOptions
+                {
+                    PaymentMethodTypes = new List<string> { "card" },
+                    LineItems = new List<SessionLineItemOptions>(),
+                    Mode = "payment",
+                    SuccessUrl = $"{Request.Scheme}://{Request.Host}/checkout/success",
+                    CancelUrl = $"{Request.Scheme}://{Request.Host}/checkout/cancel",
+                };
+
+
+            foreach (var item in carts)
+                {
+                    options.LineItems.Add(new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            Currency = "egp",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Movie!.Name,
+                                Description = item.Movie!.Description,
+                            },
+                            UnitAmount = (long)item.Movie!.Price * 100,
+                        },
+                        Quantity = item.Count,
+                    });
+                }
+
+                var service = new SessionService();
+                var session = service.Create(options);
+
+                order.SessionId = session.Id;
+                await repositoryOrder.CommitAsync();
+
+                return Redirect(session.Url);
+            }
+            return NotFound();
+        }
 
     }
 }

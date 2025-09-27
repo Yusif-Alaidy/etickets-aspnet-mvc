@@ -17,6 +17,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
     <PackageReference Include="NToastNotify" Version="8.0.0" />
+    <PackageReference Include="Stripe.net" Version="48.5.0" />
     <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
