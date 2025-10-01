@@ -1,5 +1,3 @@
-C:\Users\yusif_j0ovw0c\.nuget\packages\ntoastnotify\8.0.0\contentFiles\any\net6.0\wwwroot\noty.js
-C:\Users\yusif_j0ovw0c\.nuget\packages\ntoastnotify\8.0.0\contentFiles\any\net6.0\wwwroot\toastr.js
 wwwroot\assets\admin\demo\chart-area-demo.js
 wwwroot\assets\admin\demo\chart-bar-demo.js
 wwwroot\assets\admin\demo\chart-pie-demo.js
@@ -97,6 +95,8 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
+C:\Users\yusif_j0ovw0c\.nuget\packages\ntoastnotify\8.0.0\contentFiles\any\net6.0\wwwroot\noty.js
+C:\Users\yusif_j0ovw0c\.nuget\packages\ntoastnotify\8.0.0\contentFiles\any\net6.0\wwwroot\toastr.js
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\wwwroot\assets\admin\demo\chart-pie-demo.js
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\wwwroot\assets\admin\img\error-404-monochrome.svg
 C:\Users\yusif_j0ovw0c\Downloads\etickets-aspnet-mvc\ETickets\ETickets\wwwroot\css\styles.css

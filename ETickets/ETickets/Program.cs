@@ -38,7 +38,7 @@ namespace ETickets
                 option.AccessDeniedPath = "/";
             });
             //builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
-            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+            StripeConfiguration.ApiKey = builder.Configuration["StripeKey:Key"];
 
             #endregion
 

@@ -19,6 +19,8 @@
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<UserOTP> UserOTPs { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItems> OrderItems { get; set; }
 
  
 

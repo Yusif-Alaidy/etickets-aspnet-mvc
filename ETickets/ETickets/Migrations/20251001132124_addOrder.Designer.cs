@@ -4,6 +4,7 @@ using ETickets.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETickets.Migrations
 {
     [DbContext(typeof(CineBookContext))]
-    partial class CineBookContextModelSnapshot : ModelSnapshot
+    [Migration("20251001132124_addOrder")]
+    partial class addOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,6 +297,9 @@ namespace ETickets.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("TransactionStatus")
+                        .HasColumnType("bit");
+
                     b.Property<string>("TransctionId")
                         .HasColumnType("nvarchar(max)");
 
@@ -302,27 +308,6 @@ namespace ETickets.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("ETickets.Models.OrderItems", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("OrderId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("ETickets.Models.UserOTP", b =>
@@ -551,25 +536,6 @@ namespace ETickets.Migrations
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("ETickets.Models.OrderItems", b =>
-                {
-                    b.HasOne("ETickets.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ETickets.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("ETickets.Models.UserOTP", b =>
