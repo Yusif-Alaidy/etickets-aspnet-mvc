@@ -96,6 +96,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ3VzdG9tZXJcVmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/yusif_j0ovw0c/Downloads/etickets-aspnet-mvc/ETickets/ETickets/Areas/Customer/Views/Checkout/Cancel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ3VzdG9tZXJcVmlld3NcQ2hlY2tvdXRcQ2FuY2VsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/yusif_j0ovw0c/Downloads/etickets-aspnet-mvc/ETickets/ETickets/Areas/Customer/Views/Checkout/Success.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ3VzdG9tZXJcVmlld3NcQ2hlY2tvdXRcU3VjY2Vzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/yusif_j0ovw0c/Downloads/etickets-aspnet-mvc/ETickets/ETickets/Areas/Customer/Views/Home/Actor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ3VzdG9tZXJcVmlld3NcSG9tZVxBY3Rvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

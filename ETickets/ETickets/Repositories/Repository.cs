@@ -93,6 +93,15 @@
     
         #endregion
 
+        #region Create Range
+
+        public async Task CreateRangeAsync(List<T> entity)
+        {
+            await _db.AddRangeAsync(entity);
+        }
+
+        #endregion
+
         #region Update
 
         public async Task Update(T entity)
@@ -108,16 +117,26 @@
         {
              _db.Remove(entity);
         }
-        
+
+        #endregion
+
+        #region Delete Rang
+
+        public async Task DeleteRangeAsync(List<T> entity)
+        {
+            _db.RemoveRange(entity);
+        }
+
         #endregion
 
         #region Save
 
-         public async Task CommitAsync()
+        public async Task CommitAsync()
         {
             await _context.SaveChangesAsync();
         }
 
-         #endregion
+        #endregion
+
     }
 }

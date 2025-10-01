@@ -4,6 +4,7 @@ using ETickets.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETickets.Migrations
 {
     [DbContext(typeof(CineBookContext))]
-    partial class CineBookContextModelSnapshot : ModelSnapshot
+    [Migration("20251001132504_addOrderItems")]
+    partial class addOrderItems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,6 +296,9 @@ namespace ETickets.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("TransactionStatus")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TransctionId")
                         .HasColumnType("nvarchar(max)");

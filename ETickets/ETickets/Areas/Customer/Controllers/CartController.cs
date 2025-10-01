@@ -156,19 +156,21 @@ namespace ETickets.Areas.Customer.Controllers
                 // Create Order <-- Cart
                 var order = new Order()
                 {
-                    ApplicationUser = user,
+                    ApplicationUserId = user.Id,
                     OrderDate = DateTime.UtcNow,
                     OrderStatus = OrderStatus.Completed,
                     TotalPrice = carts.Sum(e => e.Movie.Price * e.Count)
                 };
+                await repositoryOrder.AddAsync(order);
+                await repositoryOrder.CommitAsync();
                 // Create options for strip
                 var options = new SessionCreateOptions
                 {
                     PaymentMethodTypes = new List<string> { "card" },
                     LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment",
-                    SuccessUrl = $"{Request.Scheme}://{Request.Host}/checkout/success",
-                    CancelUrl = $"{Request.Scheme}://{Request.Host}/checkout/cancel",
+                    SuccessUrl = $"{Request.Scheme}://{Request.Host}/customer/checkout/success?orderId={order.Id}",
+                    CancelUrl = $"{Request.Scheme}://{Request.Host}/customer/checkout/cancel",
                 };
 
 
@@ -181,10 +183,10 @@ namespace ETickets.Areas.Customer.Controllers
                             Currency = "egp",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
-                                Name = item.Movie!.Name,
-                                Description = item.Movie!.Description,
+                                Name = item.Movie.Name,
+                                //Description = item.Movie.Description,
                             },
-                            UnitAmount = (long)item.Movie!.Price * 100,
+                            UnitAmount = (long)item.Movie.Price * 100,
                         },
                         Quantity = item.Count,
                     });

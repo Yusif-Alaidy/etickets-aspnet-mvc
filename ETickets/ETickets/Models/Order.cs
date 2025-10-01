@@ -11,7 +11,6 @@
         public DateTime OrderDate { get; set; }
 
         public OrderStatus OrderStatus { get; set; }
-        public bool TransactionStatus { get; set; }
 
         public string ApplicationUserId { get; set; } = null!;
         public ApplicationUser ApplicationUser { get; set; } = null!;
