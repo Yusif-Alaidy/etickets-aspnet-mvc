@@ -33,7 +33,8 @@ namespace ETickets.Areas.Customer.Controllers
             var categories = await repositoryCategory.GetAsync();
             var cinemas = await repositoryCinema.GetAsync();
             var movies = await repositoryMovie.GetAsync(include: [e => e.Category! , e => e.Cinema!]);
-            
+            var commingSoon = await repositoryMovie.GetAsync(e=>e.StartDate > DateTime.UtcNow ,include: [e => e.Category!, e => e.Cinema!]);
+
             if (movies is null) return NotFound();
 
             #region Filtering
@@ -77,7 +78,7 @@ namespace ETickets.Areas.Customer.Controllers
 
             movies = movies.Skip((page - 1) * 10).Take(10).ToList();
             #endregion
-
+            ViewBag.CommingSoon = commingSoon;
             data.Movies = movies;
             data.Categories = categories;
             data.Cinemas = cinemas;

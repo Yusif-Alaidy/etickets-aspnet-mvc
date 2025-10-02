@@ -14,7 +14,7 @@
         [Range(1, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public decimal Price { get; set; }
 
-        public string? ImgUrl { get; set; }
+        public string ImgUrl { get; set; } = "default.jpg";
         public int? Quantity { get; set; }
 
         public string? TrailerUrl { get; set; }

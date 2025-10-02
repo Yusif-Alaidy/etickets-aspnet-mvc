@@ -22,7 +22,7 @@
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItems> OrderItems { get; set; }
 
- 
+
 
         #endregion
 
@@ -100,6 +100,7 @@
                 entity.Property(e => e.Name).HasMaxLength(200);
                 entity.Property(e => e.ImgUrl).HasMaxLength(255);
                 entity.Property(e => e.TrailerUrl).HasMaxLength(500);
+                entity.Property(e => e.ImgUrl).HasDefaultValue("default.jpg").ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Price).HasColumnType("decimal(10, 2)");
                 entity.Property(e => e.StartDate).HasColumnType("datetime");
